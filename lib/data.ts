@@ -46,7 +46,7 @@ export const projects = [
       "A luxurious, elegant e-commerce brand experience with a premium feminine aesthetic, smooth reveal animations, and a seamless shopping journey.",
     longDescription:
       "Blingish wanted a digital storefront that exuded the same luxury as their artificial jewellery collection. We crafted a highly immersive e-commerce experience using soft beige and rose gold tones, featuring edge-to-edge product storytelling and seamless cart integration. The result: a 340% increase in online sales during their launch month.",
-    tags: ["Next.js", "TailwindCSS", "Framer Motion"],
+    image: "/blingish-photos/1.png",
     gradient: "from-amber-400 to-orange-500",
     stats: { increase: "340%", metric: "Sales Growth" },
   },
@@ -58,7 +58,6 @@ export const projects = [
       "A modern restaurant website with online ordering, real-time table reservations, and dynamic menu management.",
     longDescription:
       "Bites & Co is a contemporary fusion restaurant that needed a website as vibrant as their menu. We delivered a full digital dining experience — from online ordering to table reservations. Online orders grew by 210% in the first month.",
-    tags: ["React", "Node.js", "Stripe"],
     gradient: "from-rose-400 to-pink-500",
     stats: { increase: "210%", metric: "Online Orders" },
   },
@@ -69,10 +68,9 @@ export const projects = [
     description:
       "A visually striking creative agency portfolio with case studies, animated transitions, and a custom CMS.",
     longDescription:
-      "Nova Creative is a top-tier motion design studio. Their portfolio needed to convey craft and creativity in every pixel. We built a custom CMS-backed portfolio with cinematic scroll animations and 3D card transitions.",
-    tags: ["Next.js", "GSAP", "Sanity CMS"],
+      "A fast-growing FinTech startup needed a secure, highly scalable platform to handle concurrent transactions and real-time data streaming. We architected a custom Nuxt & Node.js solution that led to a 150% boost in user acquisition within 6 weeks.",
     gradient: "from-violet-400 to-indigo-500",
-    stats: { increase: "180%", metric: "Inquiries" },
+    stats: { increase: "150%", metric: "User Acquisition" },
   },
   {
     slug: "taskflow-app",
@@ -81,10 +79,9 @@ export const projects = [
     description:
       "A B2B project management SaaS platform with real-time collaboration, Kanban boards, and AI task suggestions.",
     longDescription:
-      "TaskFlow is a project management SaaS serving 200+ teams. We built the full platform from scratch — including real-time WebSocket collaboration, AI-powered task suggestions, and a custom analytics dashboard.",
-    tags: ["Next.js", "Socket.io", "PostgreSQL"],
+      "This architecture firm wanted a minimalist, ultra-fast portfolio that lets their work speak for itself. We built a custom CMS integration that allows them to effortlessly update their case studies, achieving a perfect PageSpeed score.",
     gradient: "from-emerald-400 to-cyan-500",
-    stats: { increase: "95%", metric: "Team Adoption" },
+    stats: { increase: "100", metric: "Lighthouse Score" },
   },
   {
     slug: "atlas-finance",
@@ -93,10 +90,9 @@ export const projects = [
     description:
       "A trust-building financial advisory firm website with secure client portal and animated data visualizations.",
     longDescription:
-      "Atlas Finance required a website that conveyed trust, precision, and professionalism. We designed a clean, data-driven site with a secure client dashboard, real-time market data feeds, and interactive charts.",
-    tags: ["React", "Chart.js", "Auth0"],
+      "We digitized physical healthcare consultations by building an intuitive telehealth portal. It features HIPAA-compliant WebRTC video calls, integrated calendar booking, and interactive patient history dashboards.",
     gradient: "from-sky-400 to-blue-500",
-    stats: { increase: "125%", metric: "Client Sign-ups" },
+    stats: { increase: "3x", metric: "Booking Rate" },
   },
   {
     slug: "aria-fashion",
@@ -105,10 +101,9 @@ export const projects = [
     description:
       "A luxury fashion e-commerce experience with virtual try-on, editorial lookbooks, and a seamless checkout.",
     longDescription:
-      "Aria Fashion is an independent luxury label that needed an e-commerce site worthy of their aesthetic. We built full Shopify + Next.js headless e-commerce with AR try-on integration, editorial lookbooks, and a one-click checkout.",
-    tags: ["Next.js", "Shopify", "Three.js"],
+      "Created a robust learning management system for a prominent design agency, offering interactive courses, project submissions, and peer reviews. The platform now supports over 5,000 active concurrent students without breaking a sweat.",
     gradient: "from-fuchsia-400 to-rose-400",
-    stats: { increase: "290%", metric: "Revenue" },
+    stats: { increase: "5k+", metric: "Active Students" },
   },
 ];
 

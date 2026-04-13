@@ -52,13 +52,22 @@ export default async function ProjectPage({ params }: PageProps) {
           className="relative w-full flex items-center justify-center overflow-hidden"
           style={{ height: "50vh", minHeight: "360px", background: gradient }}
         >
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 30% 50%, rgba(255,255,255,0.2) 0%, transparent 60%), radial-gradient(circle at 70% 20%, rgba(255,255,255,0.15) 0%, transparent 50%)",
-            }}
-          />
+          {project.image ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img 
+              src={project.image} 
+              alt={project.title} 
+              className="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-overlay"
+            />
+          ) : (
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at 30% 50%, rgba(255,255,255,0.2) 0%, transparent 60%), radial-gradient(circle at 70% 20%, rgba(255,255,255,0.15) 0%, transparent 50%)",
+              }}
+            />
+          )}
           <div className="relative z-10 text-center px-6">
             <span
               className="inline-block px-3 py-1.5 rounded-full text-xs font-semibold text-white mb-4"
@@ -93,24 +102,6 @@ export default async function ProjectPage({ params }: PageProps) {
             <ArrowLeft size={15} />
             Back to Portfolio
           </Link>
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium"
-                style={{
-                  background: "rgba(79,142,247,0.08)",
-                  color: "var(--brand-blue)",
-                  border: "1px solid rgba(79,142,247,0.15)",
-                }}
-              >
-                <Tag size={11} />
-                {tag}
-              </span>
-            ))}
-          </div>
 
           {/* Content Block */}
           {project.slug === "blingish" ? (
