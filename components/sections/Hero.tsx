@@ -139,6 +139,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
+      data-theme="dark"
       style={{
         position: "relative",
         minHeight: "100vh",
@@ -148,8 +149,8 @@ export default function Hero() {
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
-        backgroundColor: "#0b0614",
-        backgroundImage: "radial-gradient(ellipse 110% 70% at 20% 10%, rgba(160, 40, 200, 0.20) 0%, transparent 55%), radial-gradient(ellipse 90% 60% at 80% 8%, rgba(200, 40, 140, 0.16) 0%, transparent 50%), linear-gradient(155deg, #0e0619 0%, #100520 45%, #0c0418 75%, #080316 100%)",
+        backgroundColor: "var(--bg-primary)",
+        backgroundImage: "var(--hero-bg-image)",
       }}
     >
       {/* ── Galaxy Canvas ── */}
@@ -161,7 +162,7 @@ export default function Hero() {
         style={{
           position: "absolute",
           inset: 0,
-          background: "radial-gradient(ellipse 80% 65% at 50% 50%, transparent 30%, rgba(11,6,20,0.97) 100%)",
+          background: "radial-gradient(ellipse 80% 65% at 50% 50%, transparent 30%, var(--hero-vignette) 100%)",
           zIndex: 1,
           pointerEvents: "none",
         }}
@@ -176,7 +177,7 @@ export default function Hero() {
           left: 0,
           right: 0,
           height: "180px",
-          background: "linear-gradient(transparent, #0b0614)",
+          background: "linear-gradient(transparent, var(--bg-primary))",
           zIndex: 2,
           pointerEvents: "none",
         }}
