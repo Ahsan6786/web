@@ -39,16 +39,16 @@ export const services = [
 
 export const projects = [
   {
-    slug: "luxe-interiors",
-    title: "Luxe Interiors",
-    category: "Business Website",
+    slug: "blingish",
+    title: "Blingish – Premium Artificial Jewellery",
+    category: "E-Commerce Store",
     description:
-      "A premium interior design studio website with immersive galleries, 3D room previews, and seamless consultation booking.",
+      "A luxurious, elegant e-commerce brand experience with a premium feminine aesthetic, smooth reveal animations, and a seamless shopping journey.",
     longDescription:
-      "Luxe Interiors needed a digital presence as refined as their craft. We built a full-featured business website with a 3D room configurator, project gallery, and integrated booking system. The result: a 340% increase in consultation bookings within 30 days.",
-    tags: ["Next.js", "Three.js", "Framer Motion"],
+      "Blingish wanted a digital storefront that exuded the same luxury as their artificial jewellery collection. We crafted a highly immersive e-commerce experience using soft beige and rose gold tones, featuring edge-to-edge product storytelling and seamless cart integration. The result: a 340% increase in online sales during their launch month.",
+    tags: ["Next.js", "TailwindCSS", "Framer Motion"],
     gradient: "from-amber-400 to-orange-500",
-    stats: { increase: "340%", metric: "Bookings" },
+    stats: { increase: "340%", metric: "Sales Growth" },
   },
   {
     slug: "bites-co",
@@ -122,13 +122,13 @@ export const stats = [
 export const testimonials = [
   {
     id: 1,
-    name: "Aarav Mehta",
-    role: "Founder, Luxe Interiors",
+    name: "Ayesha Khan",
+    role: "Founder, Blingish",
     content:
-      "Webis didn't just build a website — they crafted an experience. Our bookings tripled within the first month. The design is absolutely stunning, and the performance is unmatched.",
+      "Webis didn't just build a store — they crafted a high-end digital boutique. Our sales tripled within the first month. The rose-gold aesthetic is absolutely stunning, and the shopping experience feels incredible.",
     rating: 5,
-    initials: "AM",
-    gradient: "from-blue-500 to-indigo-500",
+    initials: "AK",
+    gradient: "from-rose-400 to-pink-500",
   },
   {
     id: 2,

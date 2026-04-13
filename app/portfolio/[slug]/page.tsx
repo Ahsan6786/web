@@ -112,24 +112,81 @@ export default async function ProjectPage({ params }: PageProps) {
             ))}
           </div>
 
-          {/* Description */}
-          <div
-            className="rounded-2xl p-8 mb-10"
-            style={{
-              background: "var(--bg-card)",
-              border: "1px solid var(--border-subtle)",
-            }}
-          >
-            <h2
-              className="font-bold text-xl mb-4"
-              style={{ color: "var(--text-primary)" }}
+          {/* Content Block */}
+          {project.slug === "blingish" ? (
+            <div className="mb-16">
+              <div
+                className="rounded-2xl p-6 sm:p-8 mb-10 text-center"
+                style={{
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border-subtle)",
+                }}
+              >
+                <h2 className="font-bold text-xl mb-4" style={{ color: "var(--text-primary)" }}>
+                  The Digital Experience
+                </h2>
+                <p className="leading-relaxed max-w-2xl mx-auto" style={{ color: "var(--text-secondary)" }}>
+                  {project.longDescription}
+                </p>
+              </div>
+
+              {/* Full Mockup Frame */}
+              <div className="flex flex-col items-center w-full px-2 sm:px-0 mt-12">
+                <div 
+                  className="w-full max-w-[1100px] flex flex-col rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-700 hover:scale-[1.002]" 
+                  style={{ 
+                    boxShadow: "0 30px 60px -15px rgba(0, 0, 0, 0.5), 0 0 120px rgba(251, 113, 133, 0.15)", // Rose-gold premium soft shadow
+                    border: "1px solid var(--border-subtle)" 
+                  }}
+                >
+                  {/* Browser Bar */}
+                  <div className="w-full h-11 bg-[#e8e6e1] dark:bg-[#16161b] border-b border-[var(--border-subtle)] flex items-center px-4 gap-2 flex-shrink-0">
+                    <div className="flex gap-2">
+                      <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                      <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                      <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                    </div>
+                    <div className="flex-1 h-6 flex items-center justify-center mx-4 rounded-md bg-black/10 dark:bg-white/5 opacity-80 overflow-hidden max-w-[300px] relative">
+                      <span className="text-[10px] font-medium text-black/60 dark:text-white/60 tracking-wider">blingish.com</span>
+                    </div>
+                  </div>
+                  
+                  {/* Stitched Landing Page Preview */}
+                  <div className="flex flex-col w-full leading-[0] font-[0px] overflow-hidden bg-black object-cover">
+                    {Array.from({ length: 13 }).map((_, i) => (
+                      <div key={i} className="w-full relative m-0 p-0 leading-none flex border-none">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img 
+                          src={`/blingish-photos/${i + 1}.png`} 
+                          alt={`Blingish Experience Part ${i + 1}`} 
+                          className="w-full h-auto block select-none m-0 p-0 border-none outline-none align-bottom"
+                          loading="lazy"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div
+              className="rounded-2xl p-8 mb-10"
+              style={{
+                background: "var(--bg-card)",
+                border: "1px solid var(--border-subtle)",
+              }}
             >
-              About This Project
-            </h2>
-            <p className="leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              {project.longDescription}
-            </p>
-          </div>
+              <h2
+                className="font-bold text-xl mb-4"
+                style={{ color: "var(--text-primary)" }}
+              >
+                About This Project
+              </h2>
+              <p className="leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                {project.longDescription}
+              </p>
+            </div>
+          )}
 
           {/* CTA */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">

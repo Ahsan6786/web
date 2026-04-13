@@ -120,8 +120,12 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   THEME TRANSITION
+   THEME TRANSITION & SMOOTH SCROLLING
 ═══════════════════════════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
+}
+
 *,
 *::before,
 *::after {
