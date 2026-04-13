@@ -36,12 +36,12 @@ export default function WhyWebis() {
                 { label: "95+", sub: "PageSpeed score on every site" },
                 { label: "100%", sub: "satisfaction or we fix it free" },
               ].map((kpi) => (
-                <div key={kpi.label} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1rem 1.25rem", borderRadius: "14px", background: "var(--bg-card)", border: "1px solid var(--border-subtle)" }}>
+                <motion.div key={kpi.label} data-theme="light" whileHover={{ y: -6, boxShadow: "0 8px 32px rgba(0,0,0,0.08)" }} transition={{ duration: 0.2 }} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1rem 1.25rem", borderRadius: "14px", background: "var(--bg-card)", border: "1px solid var(--border-subtle)", boxShadow: "0 4px 16px rgba(0,0,0,0.04)", willChange: "transform, box-shadow" }}>
                   <span style={{ fontWeight: 800, fontSize: "1.35rem", background: "var(--gradient-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", whiteSpace: "nowrap" }}>
                     {kpi.label}
                   </span>
                   <span style={{ fontSize: "0.83rem", color: "var(--text-secondary)" }}>{kpi.sub}</span>
-                </div>
+                </motion.div>
               ))}
 
               <motion.a href="/#contact" className="btn btn-primary" style={{ width: "fit-content" }} whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
@@ -59,9 +59,10 @@ export default function WhyWebis() {
                 <ScrollReveal key={item.title} delay={i * 0.07} direction="up">
                   <motion.div
                     className="card"
-                    whileHover={{ y: -5 }}
-                    transition={{ duration: 0.25 }}
-                    style={{ padding: "1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem", willChange: "transform", background: "var(--bg-card)" }}
+                    data-theme="light"
+                    whileHover={{ y: -6, boxShadow: "0 8px 32px rgba(0,0,0,0.08)" }}
+                    transition={{ duration: 0.3 }}
+                    style={{ padding: "1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem", willChange: "transform, box-shadow", background: "var(--bg-card)", border: "1px solid var(--border-subtle)", boxShadow: "0 4px 16px rgba(0,0,0,0.04)", borderRadius: "20px" }}
                   >
                     <div style={{ width: "40px", height: "40px", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", background: c.bg, border: `1px solid ${c.border}`, color: c.color, flexShrink: 0 }}>
                       <Icon size={17} />

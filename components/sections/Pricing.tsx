@@ -32,17 +32,18 @@ export default function Pricing() {
           {pricingTiers.map((tier, i) => (
             <ScrollReveal key={tier.id} delay={i * 0.1} direction="up">
               <motion.div
+                data-theme="light"
                 onHoverStart={() => setHovered(tier.id)}
                 onHoverEnd={() => setHovered(null)}
                 animate={{
-                  y: hovered === tier.id ? -8 : 0,
+                  y: hovered === tier.id ? -6 : 0,
                   boxShadow: hovered === tier.id
                     ? tier.popular
-                      ? "0 24px 64px rgba(0,0,0,0.6), 0 0 60px rgba(124,58,237,0.3)"
-                      : "0 24px 56px rgba(0,0,0,0.5), 0 0 40px rgba(124,58,237,0.12)"
+                      ? "0 8px 32px rgba(0,0,0,0.08), 0 0 60px rgba(124,58,237,0.15)"
+                      : "0 8px 32px rgba(0,0,0,0.08)"
                     : tier.popular
-                      ? "0 8px 40px rgba(124,58,237,0.2), 0 0 0 1px rgba(124,58,237,0.35)"
-                      : "none",
+                      ? "0 4px 16px rgba(0,0,0,0.04), 0 0 0 1px rgba(124,58,237,0.35)"
+                      : "0 4px 16px rgba(0,0,0,0.04)",
                 }}
                 transition={{ duration: 0.28, ease: "easeOut" as const }}
                 style={{
@@ -50,7 +51,7 @@ export default function Pricing() {
                   borderRadius: "24px", overflow: "hidden",
                   background: "var(--bg-card)",
                   border: tier.popular ? "1px solid rgba(124,58,237,0.4)" : "1px solid var(--border-subtle)",
-                  willChange: "transform",
+                  willChange: "transform, box-shadow",
                 }}
               >
                 {/* Popular ribbon */}

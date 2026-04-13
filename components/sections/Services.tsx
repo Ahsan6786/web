@@ -49,14 +49,17 @@ function TimelineCard({ service, i }: { service: typeof services[0]; i: number }
         <motion.div
           initial={{ opacity: 0, x: isLeftOnDesktop ? -30 : 30, y: 15 }}
           whileInView={{ opacity: 1, x: 0, y: 0 }}
+          whileHover={{ y: -6, boxShadow: "0 8px 32px rgba(0,0,0,0.08)" }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="w-[calc(100%-4.5rem)] md:w-[calc(50%-3.5rem)] p-8 sm:p-10 rounded-[32px] overflow-hidden"
+          data-theme="light"
           style={{
             background: "var(--bg-card)",
             border: "1px solid var(--border-subtle)",
-            boxShadow: "var(--shadow-card)",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
             position: "relative",
+            transition: "box-shadow 0.3s ease, transform 0.3s ease",
           }}
         >
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--border-accent)] to-transparent pointer-events-none opacity-20" />

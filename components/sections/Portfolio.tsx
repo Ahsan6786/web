@@ -42,8 +42,9 @@ export default function Portfolio() {
               <ScrollReveal key={project.slug} delay={i * 0.07} direction="up">
                 <Link href={`/portfolio/${project.slug}`} style={{ display: "block", height: "100%", textDecoration: "none" }}>
                   <motion.div
-                    style={{ height: "100%", display: "flex", flexDirection: "column", borderRadius: "20px", overflow: "hidden", background: "var(--bg-card)", border: "1px solid var(--border-subtle)", willChange: "transform" }}
-                    whileHover={{ y: -8, boxShadow: "0 24px 60px rgba(0,0,0,0.6), 0 0 40px rgba(124,58,237,0.15)" }}
+                    data-theme="light"
+                    style={{ height: "100%", display: "flex", flexDirection: "column", borderRadius: "20px", overflow: "hidden", background: "var(--bg-card)", border: "1px solid var(--border-subtle)", willChange: "transform, box-shadow", boxShadow: "0 4px 16px rgba(0,0,0,0.04)" }}
+                    whileHover={{ y: -6, boxShadow: "0 8px 32px rgba(0,0,0,0.08)" }}
                     transition={{ duration: 0.3, ease: "easeOut" as const }}
                   >
                     {/* Gradient header */}
