@@ -19,7 +19,7 @@ const palette = [
 
 export default function WhyWebis() {
   return (
-    <section id="why" className="section" style={{ background: "var(--bg-surface)", position: "relative" }}>
+    <section id="why" data-theme="dark" className="section" style={{ background: "var(--bg-surface)", position: "relative" }}>
       {/* Decorative orbit rings */}
       <div aria-hidden style={{ position: "absolute", right: "-180px", top: "50%", transform: "translateY(-50%)", width: "560px", height: "560px", borderRadius: "50%", border: "1px solid var(--border-subtle)", pointerEvents: "none" }} />
       <div aria-hidden style={{ position: "absolute", right: "-80px", top: "50%", transform: "translateY(-50%)", width: "360px", height: "360px", borderRadius: "50%", border: "1px solid var(--border-accent)", opacity: 0.5, pointerEvents: "none" }} />

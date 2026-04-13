@@ -11,7 +11,7 @@ export default function Pricing() {
   const [hovered, setHovered] = useState<string | null>(null);
 
   return (
-    <section id="pricing" className="section" style={{ background: "var(--bg-surface)", position: "relative", overflow: "hidden" }}>
+    <section id="pricing" data-theme="dark" className="section" style={{ background: "var(--bg-surface)", position: "relative", overflow: "hidden" }}>
       {/* Galaxy ambient */}
       <div aria-hidden style={{ position: "absolute", top: "-80px", right: "10%", width: "500px", height: "500px", background: "radial-gradient(ellipse, rgba(124,58,237,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
       <div aria-hidden style={{ position: "absolute", bottom: "-60px", left: "12%", width: "400px", height: "400px", background: "radial-gradient(ellipse, rgba(37,99,235,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
@@ -73,7 +73,7 @@ export default function Pricing() {
                       style={{
                         fontWeight: 900,
                         fontSize: tier.price === "Custom" ? "2.4rem" : "2.8rem",
-                        background: tier.popular ? "linear-gradient(135deg, #a78bfa, #60a5fa, #fb923c)" : "none",
+                        background: tier.popular ? "var(--gradient-text)" : "none",
                         WebkitBackgroundClip: tier.popular ? "text" : "unset",
                         WebkitTextFillColor: tier.popular ? "transparent" : "var(--text-primary)",
                         backgroundClip: tier.popular ? "text" : "unset",
@@ -93,8 +93,8 @@ export default function Pricing() {
                   <ul style={{ display: "flex", flexDirection: "column", gap: "0.75rem", flex: 1, listStyle: "none", padding: 0, margin: "0 0 1.75rem 0" }}>
                     {tier.features.map((f) => (
                       <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", fontSize: "0.84rem" }}>
-                        <span style={{ width: "18px", height: "18px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "1px", background: "rgba(124,58,237,0.12)" }}>
-                          <Check size={10} color="#a78bfa" />
+                        <span style={{ width: "18px", height: "18px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "1px", background: "var(--brand-glow-p)" }}>
+                          <Check size={10} color="var(--brand-purple)" />
                         </span>
                         <span style={{ color: "var(--text-secondary)" }}>{f}</span>
                       </li>
@@ -129,7 +129,7 @@ export default function Pricing() {
         <ScrollReveal delay={0.4}>
           <p style={{ textAlign: "center", fontSize: "0.8rem", color: "var(--text-muted)", marginTop: "2rem" }}>
             All prices are one-time unless noted.{" "}
-            <a href="/#contact" style={{ color: "#7c3aed", textDecoration: "none" }}>Need something custom?</a>
+            <a href="/#contact" style={{ color: "var(--brand-purple)", textDecoration: "none" }}>Need something custom?</a>
           </p>
         </ScrollReveal>
       </div>

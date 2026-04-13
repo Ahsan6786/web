@@ -19,7 +19,7 @@ const gradients: Record<string, string> = {
 
 export default function Portfolio() {
   return (
-    <section id="portfolio" className="section" style={{ background: "var(--bg-surface)", position: "relative" }}>
+    <section id="portfolio" data-theme="dark" className="section" style={{ background: "var(--bg-surface)", position: "relative" }}>
       {/* Side galaxy glow */}
       <div aria-hidden style={{ position: "absolute", right: "5%", top: "20%", width: "400px", height: "400px", background: "radial-gradient(ellipse, var(--glow-blue) 0%, transparent 70%)", pointerEvents: "none" }} />
 

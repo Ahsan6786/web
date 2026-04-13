@@ -33,7 +33,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: "var(--bg-surface)", borderTop: "1px solid rgba(124,58,237,0.12)", position: "relative" }}>
+    <footer data-theme="dark" style={{ background: "var(--bg-surface)", borderTop: "1px solid var(--border-subtle)", position: "relative" }}>
       {/* Galaxy top line */}
       <div aria-hidden style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, #7c3aed 35%, #2563eb 50%, #f97316 70%, transparent)", opacity: 0.6 }} />
 
