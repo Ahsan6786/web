@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Sun, Moon } from "lucide-react";
-import { useTheme } from "@/lib/ThemeProvider";
+import { useTheme } from "next-themes";
 
 const navLinks = [
   { label: "Services",  href: "/#services" },
@@ -19,7 +19,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -106,31 +109,25 @@ export default function Navbar() {
 
           {/* Actions */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
-            {/* Theme toggle */}
+            {/* Theme Toggle */}
             <motion.button
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              aria-label="Toggle theme"
               style={{
-                width: "36px", height: "36px", borderRadius: "10px", 
-                border: scrolled ? "1px solid var(--border-subtle)" : "1px solid rgba(255, 255, 255, 0.15)",
-                background: scrolled ? "var(--bg-card)" : "rgba(255,255,255,0.05)", 
-                color: scrolled ? "var(--text-primary)" : "rgba(255, 255, 255, 0.9)",
-                display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                background: "transparent",
+                border: "1px solid var(--border-subtle)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                cursor: "pointer",
+                color: "var(--text-secondary)",
+                transition: "border-color 0.2s"
               }}
             >
-              <AnimatePresence mode="wait">
-                {theme === "dark" ? (
-                  <motion.span key="sun" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }} style={{ display: "flex" }}>
-                    <Sun size={15} />
-                  </motion.span>
-                ) : (
-                  <motion.span key="moon" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }} style={{ display: "flex" }}>
-                    <Moon size={15} />
-                  </motion.span>
-                )}
-              </AnimatePresence>
+              {mounted && theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
             </motion.button>
 
             {/* CTA */}
@@ -185,15 +182,25 @@ export default function Navbar() {
             transition={{ duration: 0.22, ease: "easeOut" as const }}
             style={{
               position: "fixed", top: "72px", left: "1rem", right: "1rem", zIndex: 40,
-              background: "rgba(16, 6, 28, 0.96)",
-              border: "1px solid rgba(220, 100, 255, 0.15)",
+              background: "var(--nav-bg)",
+              border: "1px solid var(--border-subtle)",
               borderRadius: "18px",
-              boxShadow: "0 24px 64px rgba(0,0,0,0.7), 0 0 40px rgba(220, 100, 255, 0.1)",
+              boxShadow: "var(--shadow-card)",
               backdropFilter: "blur(24px)",
               overflow: "hidden", willChange: "transform, opacity",
             }}
           >
             <nav style={{ display: "flex", flexDirection: "column", padding: "0.625rem" }}>
+              {/* Mobile Theme Toggle */}
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                style={{
+                  display: "flex", alignItems: "center", gap: "1rem", width: "100%",
+                  padding: "1rem", borderRadius: "12px", background: "var(--bg-input)", border: "1px solid var(--border-subtle)", color: "var(--text-primary)", fontWeight: 600, fontSize: "1rem", cursor: "pointer", marginBottom: "0.5rem"
+                }}
+              >
+                {mounted && theme === "dark" ? <><Sun size={20} /> Switch to Light Mode</> : <><Moon size={20} /> Switch to Dark Mode</>}
+              </button>
               {navLinks.map((link, i) => (
                 <motion.div key={link.label} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04, ease: "easeOut" as const }}>
                   <Link
