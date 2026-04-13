@@ -9,19 +9,19 @@ import SectionHeading from "@/components/ui/SectionHeading";
 
 // Map old Tailwind gradient class names → galaxy-palette inline gradients
 const gradients: Record<string, string> = {
-  "from-amber-400 to-orange-500":   "linear-gradient(135deg, #7c3aed, #f97316)",
-  "from-rose-400 to-pink-500":      "linear-gradient(135deg, #7c3aed, #db2777)",
-  "from-violet-400 to-indigo-500":  "linear-gradient(135deg, #a78bfa, #4f46e5)",
-  "from-emerald-400 to-cyan-500":   "linear-gradient(135deg, #2563eb, #0ea5e9)",
-  "from-sky-400 to-blue-500":       "linear-gradient(135deg, #2563eb, #7c3aed)",
-  "from-fuchsia-400 to-rose-400":   "linear-gradient(135deg, #7c3aed, #f97316)",
+  "from-amber-400 to-orange-500":   "var(--gradient-cta)",
+  "from-rose-400 to-pink-500":      "var(--gradient-brand)",
+  "from-violet-400 to-indigo-500":  "var(--gradient-text)",
+  "from-emerald-400 to-cyan-500":   "var(--gradient-cta)",
+  "from-sky-400 to-blue-500":       "var(--gradient-brand)",
+  "from-fuchsia-400 to-rose-400":   "var(--gradient-text)",
 };
 
 export default function Portfolio() {
   return (
     <section id="portfolio" className="section" style={{ background: "var(--bg-surface)", position: "relative" }}>
       {/* Side galaxy glow */}
-      <div aria-hidden style={{ position: "absolute", right: "5%", top: "20%", width: "400px", height: "400px", background: "radial-gradient(ellipse, rgba(37,99,235,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div aria-hidden style={{ position: "absolute", right: "5%", top: "20%", width: "400px", height: "400px", background: "radial-gradient(ellipse, var(--glow-blue) 0%, transparent 70%)", pointerEvents: "none" }} />
 
       <div style={{ maxWidth: "1320px", margin: "0 auto", padding: "0 1.5rem" }}>
         <ScrollReveal>
@@ -37,7 +37,7 @@ export default function Portfolio() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "1.25rem" }}>
           {projects.map((project, i) => {
-            const gradient = gradients[project.gradient] ?? "linear-gradient(135deg, #7c3aed, #2563eb)";
+            const gradient = gradients[project.gradient] ?? "var(--gradient-brand)";
             return (
               <ScrollReveal key={project.slug} delay={i * 0.07} direction="up">
                 <Link href={`/portfolio/${project.slug}`} style={{ display: "block", height: "100%", textDecoration: "none" }}>
@@ -70,12 +70,12 @@ export default function Portfolio() {
                       <p style={{ fontSize: "0.83rem", color: "var(--text-secondary)", lineHeight: 1.6, flex: 1, marginBottom: "1rem" }}>{project.description}</p>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "1rem" }}>
                         {project.tags.map((tag) => (
-                          <span key={tag} style={{ fontSize: "0.7rem", padding: "0.25rem 0.65rem", borderRadius: "8px", fontWeight: 600, background: "rgba(124,58,237,0.1)", color: "#a78bfa", border: "1px solid rgba(124,58,237,0.25)" }}>
+                          <span key={tag} style={{ fontSize: "0.7rem", padding: "0.25rem 0.65rem", borderRadius: "8px", fontWeight: 600, background: "var(--brand-glow-p)", color: "var(--brand-purple)", border: "1px solid var(--border-subtle)" }}>
                             {tag}
                           </span>
                         ))}
                       </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontSize: "0.8rem", fontWeight: 600, color: "#7c3aed" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontSize: "0.8rem", fontWeight: 600, color: "var(--brand-purple)" }}>
                         View Case Study <ArrowRight size={13} />
                       </div>
                     </div>

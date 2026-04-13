@@ -9,20 +9,20 @@ import SectionHeading from "@/components/ui/SectionHeading";
 const iconMap: Record<string, React.ElementType> = { Zap, Palette, Shield, Globe, MessageCircle, TrendingUp };
 
 const palette = [
-  { bg: "rgba(124,58,237,0.1)",  border: "rgba(124,58,237,0.25)",  color: "#a78bfa" },
-  { bg: "rgba(37,99,235,0.1)",   border: "rgba(37,99,235,0.25)",   color: "#60a5fa" },
-  { bg: "rgba(249,115,22,0.1)",  border: "rgba(249,115,22,0.25)",  color: "#fb923c" },
-  { bg: "rgba(124,58,237,0.1)",  border: "rgba(124,58,237,0.25)",  color: "#a78bfa" },
-  { bg: "rgba(37,99,235,0.1)",   border: "rgba(37,99,235,0.25)",   color: "#60a5fa" },
-  { bg: "rgba(249,115,22,0.1)",  border: "rgba(249,115,22,0.25)",  color: "#fb923c" },
+  { bg: "var(--brand-glow-p)",  border: "var(--border-subtle)",  color: "var(--brand-purple)" },
+  { bg: "var(--brand-glow-b)",  border: "var(--border-subtle)",  color: "var(--brand-blue)" },
+  { bg: "var(--glow-orange)",   border: "var(--border-subtle)",  color: "var(--brand-orange)" },
+  { bg: "var(--brand-glow-p)",  border: "var(--border-subtle)",  color: "var(--brand-purple)" },
+  { bg: "var(--brand-glow-b)",  border: "var(--border-subtle)",  color: "var(--brand-blue)" },
+  { bg: "var(--glow-orange)",   border: "var(--border-subtle)",  color: "var(--brand-orange)" },
 ];
 
 export default function WhyWebis() {
   return (
     <section id="why" className="section" style={{ background: "var(--bg-surface)", position: "relative" }}>
       {/* Decorative orbit rings */}
-      <div aria-hidden style={{ position: "absolute", right: "-180px", top: "50%", transform: "translateY(-50%)", width: "560px", height: "560px", borderRadius: "50%", border: "1px solid rgba(124,58,237,0.08)", pointerEvents: "none" }} />
-      <div aria-hidden style={{ position: "absolute", right: "-80px", top: "50%", transform: "translateY(-50%)", width: "360px", height: "360px", borderRadius: "50%", border: "1px solid rgba(124,58,237,0.14)", pointerEvents: "none" }} />
+      <div aria-hidden style={{ position: "absolute", right: "-180px", top: "50%", transform: "translateY(-50%)", width: "560px", height: "560px", borderRadius: "50%", border: "1px solid var(--border-subtle)", pointerEvents: "none" }} />
+      <div aria-hidden style={{ position: "absolute", right: "-80px", top: "50%", transform: "translateY(-50%)", width: "360px", height: "360px", borderRadius: "50%", border: "1px solid var(--border-accent)", opacity: 0.5, pointerEvents: "none" }} />
 
       <div style={{ maxWidth: "1320px", margin: "0 auto", padding: "0 1.5rem", position: "relative", zIndex: 1 }}>
         <div style={{ display: "grid", gap: "4rem" }} className="lg:grid-cols-[1fr_1.1fr]">
@@ -37,7 +37,7 @@ export default function WhyWebis() {
                 { label: "100%", sub: "satisfaction or we fix it free" },
               ].map((kpi) => (
                 <div key={kpi.label} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1rem 1.25rem", borderRadius: "14px", background: "var(--bg-card)", border: "1px solid var(--border-subtle)" }}>
-                  <span style={{ fontWeight: 800, fontSize: "1.35rem", background: "linear-gradient(135deg, #a78bfa, #60a5fa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", whiteSpace: "nowrap" }}>
+                  <span style={{ fontWeight: 800, fontSize: "1.35rem", background: "var(--gradient-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", whiteSpace: "nowrap" }}>
                     {kpi.label}
                   </span>
                   <span style={{ fontSize: "0.83rem", color: "var(--text-secondary)" }}>{kpi.sub}</span>
