@@ -47,8 +47,8 @@ export default function Testimonials() {
   const slideTransition = { duration: 0.42, ease: "easeOut" as const };
 
   return (
-    <section id="testimonials" className="section" style={{ background: "var(--bg-primary)", position: "relative", overflow: "hidden" }}>
-      <div aria-hidden style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "700px", height: "350px", background: "radial-gradient(ellipse, var(--glow-purple) 0%, transparent 70%)", pointerEvents: "none" }} />
+    <section id="testimonials" className="section" style={{ background: "var(--bg-primary)", position: "relative", overflow: "hidden", contain: "paint" }}>
+      <div aria-hidden style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "700px", height: "350px", background: "radial-gradient(ellipse, var(--glow-primary) 0%, transparent 70%)", pointerEvents: "none" }} />
 
       <div style={{ maxWidth: "1320px", margin: "0 auto", padding: "0 1.5rem", position: "relative", zIndex: 1 }}>
         <ScrollReveal>
@@ -90,7 +90,7 @@ export default function Testimonials() {
                   }
                 }}
               >
-                <div style={{ width: "44px", height: "44px", borderRadius: "12px", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--brand-glow-p)", border: "1px solid var(--border-accent)", color: "var(--brand-purple)" }}>
+                <div style={{ width: "44px", height: "44px", borderRadius: "12px", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--brand-glow-b)", border: "1px solid var(--border-accent)", color: "var(--brand-primary)" }}>
                   <Quote size={18} />
                 </div>
                 <div style={{ display: "flex", gap: "0.25rem" }}>
@@ -119,7 +119,7 @@ export default function Testimonials() {
             </motion.button>
             <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
               {testimonials.map((_, i) => (
-                <motion.button key={i} onClick={() => goTo(i, i > idx ? 1 : -1)} aria-label={`Go to ${i + 1}`} animate={{ width: i === idx ? 24 : 7, backgroundColor: i === idx ? "var(--brand-purple)" : "var(--border-subtle)" }} transition={{ duration: 0.3 }} style={{ height: 7, borderRadius: "4px", border: "none", cursor: "pointer" }} />
+                <motion.button key={i} onClick={() => goTo(i, i > idx ? 1 : -1)} aria-label={`Go to ${i + 1}`} animate={{ width: i === idx ? 24 : 7, backgroundColor: i === idx ? "var(--brand-primary)" : "var(--border-subtle)" }} transition={{ duration: 0.3 }} style={{ height: 7, borderRadius: "4px", border: "none", cursor: "pointer" }} />
               ))}
             </div>
             <motion.button onClick={next} aria-label="Next" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} style={{ width: "40px", height: "40px", borderRadius: "50%", border: "1px solid var(--border-subtle)", background: "var(--bg-card)", color: "var(--text-secondary)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>

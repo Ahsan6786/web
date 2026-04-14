@@ -19,14 +19,14 @@ export default function SectionHeading({ label, title, titleHighlight, subtitle,
   return (
     <div className={cn("flex flex-col gap-4", alignClass, className)}>
       {label && (
-        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "0.4rem 1rem", borderRadius: "100px", background: "rgba(124,58,237,0.1)", color: "#a78bfa", border: "1px solid rgba(124,58,237,0.3)", width: "fit-content" }}>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "0.4rem 1rem", borderRadius: "100px", background: "var(--brand-glow-b)", color: "var(--brand-primary)", border: "1px solid var(--border-subtle)", width: "fit-content" }}>
           {label}
         </span>
       )}
       <h2 style={{ fontWeight: 800, fontSize: "clamp(1.9rem, 5vw, 3rem)", lineHeight: 1.14, letterSpacing: "-0.025em", color: "var(--text-primary)", margin: 0 }}>
         {title}{" "}
         {titleHighlight && (
-          <span style={{ background: "linear-gradient(135deg, #a78bfa, #60a5fa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+          <span style={{ background: "var(--gradient-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
             {titleHighlight}
           </span>
         )}

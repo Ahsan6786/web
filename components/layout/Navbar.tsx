@@ -4,25 +4,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Sun, Moon } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { label: "Services",  href: "/#services" },
   { label: "Portfolio", href: "/#portfolio" },
-  { label: "Stats",     href: "/#stats" },
-  { label: "Pricing",   href: "/#pricing" },
-  { label: "Contact",   href: "/#contact" },
+  { label: "Blog",      href: "/blog"      },
+  { label: "Pricing",   href: "/#pricing"  },
+  { label: "Contact",   href: "/#contact"  },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
-  const { theme, setTheme, systemTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -38,44 +33,63 @@ export default function Navbar() {
         initial={{ y: -72, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.55, ease: "easeOut" as const }}
+        onMouseMove={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+          e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+        }}
         style={{
           position: "fixed", 
-          top: scrolled ? "1rem" : "0", 
+          top: scrolled ? "1.25rem" : "0", 
           left: 0, 
           right: 0, 
           zIndex: 50,
           margin: "0 auto",
           maxWidth: "1100px",
-          width: scrolled ? "calc(100% - 2rem)" : "100%",
+          width: scrolled ? "calc(100% - 2.5rem)" : "100%",
           padding: scrolled ? "0.2rem 0" : "0.5rem 0",
-          backgroundColor: scrolled ? "var(--nav-bg)" : "transparent",
-          border: scrolled ? "1px solid var(--nav-border)" : "1px solid transparent",
+          backgroundColor: scrolled ? "rgba(255, 255, 255, 0.04)" : "transparent",
+          border: scrolled ? "1px solid rgba(255, 255, 255, 0.12)" : "1px solid transparent",
+          borderTop: scrolled ? "1.5px solid rgba(255, 255, 255, 0.25)" : "1px solid transparent", // Diamond edge
           borderRadius: scrolled ? "24px" : "0",
-          boxShadow: scrolled ? "0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)" : "none",
-          backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
-          transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
+          boxShadow: scrolled ? "0 12px 40px rgba(0,0,0,0.15), inset 0 0 12px rgba(255,255,255,0.02)" : "none",
+          backdropFilter: "blur(32px) saturate(210%)",
+          WebkitBackdropFilter: "blur(32px) saturate(210%)",
+          opacity: 1,
+          transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.6s ease",
+        } as any}
       >
+        {/* Physical Refraction Glint — Solidified opacity-based render */}
+        <div 
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "radial-gradient(400px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(255, 255, 255, 0.12), transparent 80%)",
+            pointerEvents: "none",
+            zIndex: 0,
+            borderRadius: "24px",
+            opacity: scrolled ? 1 : 0,
+            transition: "opacity 0.6s ease"
+          }}
+        />
         <div className="mx-auto flex items-center justify-between px-6 py-3">
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.625rem", textDecoration: "none" }}>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }} style={{ display: "flex", alignItems: "center", gap: "0.625rem", willChange: "transform" }}>
               <div
                 style={{
-                  width: "34px", height: "34px", borderRadius: "10px",
+                  width: "36px", height: "36px", 
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontWeight: 900, fontSize: "1rem", color: "white",
-                  background: "linear-gradient(135deg, #e879f9, #a78bfa)",
-                  boxShadow: "0 4px 16px rgba(232,121,249,0.35)",
                   overflow: "hidden", position: "relative",
                 }}
               >
-                <span style={{ position: "relative", zIndex: 1, color: "#fff" }}>W</span>
-                <motion.div
-                  style={{ position: "absolute", inset: 0, background: "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.4) 50%, transparent 65%)", transform: "translateX(-100%)" }}
-                  animate={{ transform: ["translateX(-100%)", "translateX(200%)"] }}
-                  transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 4, ease: "easeInOut" as const }}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src="/logo.png" 
+                  alt="Webis Digital Agency - Premium Web Development Logo" 
+                  style={{ width: "100%", height: "100%", objectFit: "contain" }} 
                 />
               </div>
               <span style={{ fontWeight: 800, fontSize: "1.1rem", color: scrolled ? "var(--text-primary)" : "#fff", letterSpacing: "-0.02em" }}>Webis</span>
@@ -85,68 +99,67 @@ export default function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1.5" style={{ background: scrolled ? "transparent" : "rgba(255,255,255,0.03)", padding: scrolled ? "0.25rem" : "0", borderRadius: "14px" }}>
             {navLinks.map((link) => (
-              <Link
+              <motion.div
                 key={link.label}
-                href={link.href}
-                style={{ 
-                   position: "relative", padding: "0.5rem 1rem", fontSize: "0.85rem", fontWeight: 500, 
-                   color: scrolled ? "var(--text-secondary)" : "rgba(255, 255, 255, 0.85)", textDecoration: "none", borderRadius: "10px",
-                   letterSpacing: "0.01em", transition: "all 0.2s"
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.backgroundColor = scrolled ? "var(--bg-input)" : "rgba(255,255,255,0.1)";
-                  (e.currentTarget as HTMLElement).style.color = scrolled ? "var(--text-primary)" : "#fff";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
-                  (e.currentTarget as HTMLElement).style.color = scrolled ? "var(--text-secondary)" : "rgba(255, 255, 255, 0.85)";
-                }}
+                whileHover={{ y: -2 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
-                {link.label}
-              </Link>
+                <Link
+                  href={link.href}
+                  style={{ 
+                    position: "relative", padding: "0.5rem 1rem", fontSize: "0.85rem", fontWeight: 600, 
+                    color: scrolled ? "var(--text-secondary)" : "rgba(255, 255, 255, 0.85)", textDecoration: "none", borderRadius: "10px",
+                    letterSpacing: "0.01em", transition: "all 0.2s"
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.backgroundColor = scrolled ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.1)";
+                    (e.currentTarget as HTMLElement).style.color = scrolled ? "var(--text-primary)" : "#fff";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+                    (e.currentTarget as HTMLElement).style.color = scrolled ? "var(--text-secondary)" : "rgba(255, 255, 255, 0.85)";
+                  }}
+                >
+                  {link.label}
+                </Link>
+              </motion.div>
             ))}
           </nav>
 
           {/* Actions */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
-            {/* Theme Toggle */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label="Toggle theme"
-              style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                background: "transparent",
-                border: "1px solid var(--border-subtle)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                cursor: "pointer",
-                color: "var(--text-secondary)",
-                transition: "border-color 0.2s"
-              }}
-            >
-              {mounted && theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-            </motion.button>
-
             {/* CTA */}
             <motion.a
               href="/#contact"
               className="btn btn-primary hidden md:inline-flex"
               style={{ 
-                padding: "0.55rem 1.25rem", fontSize: "0.85rem", 
-                background: "linear-gradient(135deg, #e879f9, #a78bfa)",
-                boxShadow: "0 4px 14px rgba(232, 121, 249, 0.35)",
-                color: "#fff",
-                border: "none",
-                borderRadius: "10px"
+                position: "relative",
+                padding: "0.6rem 1.4rem", 
+                fontSize: "0.85rem", 
+                overflow: "hidden",
+                boxShadow: scrolled ? "0 4px 14px var(--glow-primary)" : "0 4px 14px rgba(255,255,255,0.1)",
               }}
-              whileHover={{ scale: 1.04, y: -1, boxShadow: "0 6px 20px rgba(232, 121, 249, 0.5)" }}
+              whileHover={{ scale: 1.05, y: -1, boxShadow: "0 8px 25px var(--glow-primary)" }}
               whileTap={{ scale: 0.97 }}
             >
-              Get Yours
+              {/* Liquid Wave Effect */}
+              <motion.div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "radial-gradient(circle at 50% 120%, rgba(255,255,255,0.2) 0%, transparent 60%)",
+                }}
+                animate={{
+                  y: [0, -6, 0],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <span style={{ position: "relative", zIndex: 1 }}>
+                Get Yours
+              </span>
             </motion.a>
+
 
             {/* Hamburger */}
             <motion.button
@@ -176,63 +189,109 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.98 }}
-            transition={{ duration: 0.22, ease: "easeOut" as const }}
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 30, stiffness: 200 }}
             style={{
-              position: "fixed", top: "72px", left: "1rem", right: "1rem", zIndex: 40,
-              background: "var(--nav-bg)",
-              border: "1px solid var(--border-subtle)",
-              borderRadius: "18px",
-              boxShadow: "var(--shadow-card)",
+              position: "fixed", top: 0, right: 0, bottom: 0, 
+              width: "min(320px, 85vw)", 
+              zIndex: 100,
+              background: "var(--bg-card)",
+              borderLeft: "1px solid var(--border-subtle)",
+              boxShadow: "-10px 0 40px rgba(0,0,0,0.1)",
               backdropFilter: "blur(24px)",
               overflow: "hidden", willChange: "transform, opacity",
+              display: "flex", flexDirection: "column"
             }}
           >
-            <nav style={{ display: "flex", flexDirection: "column", padding: "0.625rem" }}>
-              {/* Mobile Theme Toggle */}
-              <button
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                style={{
-                  display: "flex", alignItems: "center", gap: "1rem", width: "100%",
-                  padding: "1rem", borderRadius: "12px", background: "var(--bg-input)", border: "1px solid var(--border-subtle)", color: "var(--text-primary)", fontWeight: 600, fontSize: "1rem", cursor: "pointer", marginBottom: "0.5rem"
-                }}
+            {/* Header / Brand */}
+            <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1px solid var(--border-subtle)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <img src="/logo.png" alt="Webis Digital Agency Logo" style={{ width: "28px", height: "28px", objectFit: "contain" }} />
+                <span style={{ fontWeight: 800, fontSize: "1.2rem", letterSpacing: "-0.02em", color: "var(--text-primary)" }}>Webis</span>
+              </div>
+              <button 
+                onClick={() => setMobileOpen(false)}
+                style={{ width: "32px", height: "32px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%", background: "var(--bg-input)", border: "none", color: "var(--text-primary)", cursor: "pointer" }}
               >
-                {mounted && theme === "dark" ? <><Sun size={20} /> Switch to Light Mode</> : <><Moon size={20} /> Switch to Dark Mode</>}
+                <X size={18} />
               </button>
+            </div>
+
+            <nav style={{ display: "flex", flexDirection: "column", padding: "1.5rem", gap: "0.5rem", flex: 1 }}>
               {navLinks.map((link, i) => (
-                <motion.div key={link.label} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04, ease: "easeOut" as const }}>
+                <motion.div 
+                  key={link.label} 
+                  initial={{ opacity: 0, x: 20 }} 
+                  animate={{ opacity: 1, x: 0 }} 
+                  transition={{ 
+                    delay: 0.1 + i * 0.05, 
+                    duration: 0.3,
+                    ease: "easeOut"
+                  }}
+                >
                   <Link
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
                     style={{ 
-                      display: "flex", alignItems: "center", padding: "0.75rem 1rem", borderRadius: "12px", 
-                      fontSize: "0.95rem", fontWeight: 500, color: "rgba(200, 180, 255, 0.85)", textDecoration: "none", transition: "background 0.18s" 
+                      display: "flex", alignItems: "center", padding: "1rem", borderRadius: "12px", 
+                      fontSize: "1.1rem", fontWeight: 700, 
+                      color: "var(--text-primary)", 
+                      textDecoration: "none", transition: "all 0.2s",
+                      position: "relative", overflow: "hidden"
                     }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(232, 121, 249, 0.15)"; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "transparent"; }}
                   >
                     {link.label}
                   </Link>
                 </motion.div>
               ))}
-              <div style={{ padding: "0.75rem 0.25rem 0.25rem", borderTop: "1px solid rgba(220, 100, 255, 0.1)", marginTop: "0.5rem" }}>
+
+              <div style={{ marginTop: "auto", paddingTop: "2rem" }}>
+
                 <a 
                   href="/#contact" 
                   className="btn btn-primary" 
                   onClick={() => setMobileOpen(false)} 
                   style={{ 
-                    width: "100%", justifyContent: "center", 
-                    background: "linear-gradient(135deg, #e879f9, #a78bfa)" ,
-                    border: "none",
-                    boxShadow: "0 4px 14px rgba(232, 121, 249, 0.35)",
+                    position: "relative",
+                    width: "100%", 
+                    justifyContent: "center", 
+                    padding: "1.1rem", 
+                    borderRadius: "14px", 
+                    fontWeight: 800,
+                    overflow: "hidden",
+                    background: "var(--gradient-brand)",
+                    boxShadow: "0 8px 24px var(--glow-primary)",
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center"
                   }}
                 >
-                  Get Yours
+                  {/* Liquid Wave Effect */}
+                  <motion.div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "radial-gradient(circle at 50% 120%, rgba(255,255,255,0.2) 0%, transparent 60%)",
+                    }}
+                    animate={{
+                      y: [0, -6, 0],
+                      scale: [1, 1.1, 1],
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  <span style={{ position: "relative", zIndex: 1 }}>
+                    Get Your Project
+                  </span>
                 </a>
               </div>
             </nav>
+            
+            {/* Soft Branding Bottom */}
+            <div style={{ padding: "1.5rem", fontSize: "0.75rem", color: "var(--text-muted)", textAlign: "center", opacity: 0.6 }}>
+              © 2026 Webis Agency
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

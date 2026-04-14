@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Share2, ExternalLink, Link2, GitBranch, ArrowUpRight, Heart } from "lucide-react";
+import { Camera, Send, Link2, GitBranch, ArrowUpRight, Heart } from "lucide-react";
 
 const footerLinks = {
   Services: [
@@ -12,30 +12,30 @@ const footerLinks = {
     { label: "Custom Web Apps",  href: "/#services" },
   ],
   Company: [
+    { label: "Blog",         href: "/blog"      },
     { label: "Portfolio",    href: "/#portfolio" },
-    { label: "Pricing",     href: "/#pricing" },
-    { label: "Why Webis",   href: "/#why" },
-    { label: "Testimonials",href: "/#testimonials" },
+    { label: "Pricing",     href: "/#pricing"   },
+    { label: "Why Webis",   href: "/#why"       },
   ],
   Contact: [
     { label: "Get a Quote",    href: "/#contact" },
     { label: "WhatsApp us",   href: "https://wa.me/919999999999", external: true },
-    { label: "hello@webis.in",href: "mailto:hello@webis.in", external: true },
+    { label: "mitraai0001@gmail.com",href: "mailto:mitraai0001@gmail.com", external: true },
   ],
 };
 
 const socials = [
-  { icon: Share2,       href: "https://instagram.com", label: "Instagram" },
-  { icon: ExternalLink, href: "https://twitter.com",   label: "Twitter / X" },
+  { icon: Camera,       href: "https://www.instagram.com/webis001?igsh=MWcwMnhoaTk0bXF0dA%3D%3D&utm_source=qr", label: "Instagram" },
+  { icon: Send,         href: "https://twitter.com",   label: "Twitter / X" },
   { icon: Link2,        href: "https://linkedin.com",  label: "LinkedIn"  },
   { icon: GitBranch,    href: "https://github.com",    label: "GitHub"    },
 ];
 
 export default function Footer() {
   return (
-    <footer data-theme="dark" style={{ background: "var(--bg-surface)", borderTop: "1px solid var(--border-subtle)", position: "relative" }}>
+    <footer style={{ background: "#000000", borderTop: "1px solid rgba(255,255,255,0.05)", position: "relative", color: "#ffffff" }}>
       {/* Galaxy top line */}
-      <div aria-hidden style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, #7c3aed 35%, #2563eb 50%, #f97316 70%, transparent)", opacity: 0.6 }} />
+      <div aria-hidden style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, #c2600a 35%, #ea580c 50%, #f59e0b 70%, transparent)", opacity: 0.8 }} />
 
       <div style={{ maxWidth: "1320px", margin: "0 auto", padding: "4.5rem 1.5rem 2rem" }}>
         <div
@@ -44,17 +44,24 @@ export default function Footer() {
             gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 180px), 1fr))",
             gap: "2.5rem 2rem",
             paddingBottom: "3rem",
-            borderBottom: "1px solid rgba(124,58,237,0.1)",
+            borderBottom: "1px solid rgba(255,255,255,0.05)",
           }}
         >
           {/* Brand */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.625rem", textDecoration: "none", width: "fit-content" }}>
-              <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "linear-gradient(135deg, #7c3aed, #2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: "1rem", color: "white", boxShadow: "0 4px 14px rgba(124,58,237,0.35)" }}>W</div>
-              <span style={{ fontWeight: 700, fontSize: "1.1rem", color: "var(--text-primary)" }}>Webis</span>
+              <div style={{ width: "38px", height: "38px", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src="/logo.png" 
+                  alt="Webis Digital Agency - Premium Web Development" 
+                  style={{ width: "100%", height: "100%", objectFit: "contain" }} 
+                />
+              </div>
+              <span style={{ fontWeight: 700, fontSize: "1.1rem", color: "#ffffff" }}>Webis</span>
             </Link>
 
-            <p style={{ fontSize: "0.83rem", lineHeight: 1.65, color: "var(--text-secondary)", maxWidth: "280px", margin: 0 }}>
+            <p style={{ fontSize: "0.83rem", lineHeight: 1.65, color: "rgba(255,255,255,0.6)", maxWidth: "280px", margin: 0 }}>
               We don&apos;t build websites. We build experiences. Premium digital agency for the age of the internet.
             </p>
 
@@ -67,11 +74,11 @@ export default function Footer() {
                   style={{
                     width: "36px", height: "36px", borderRadius: "10px",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.18)",
-                    color: "var(--text-muted)", transition: "background 0.2s, color 0.2s",
+                    background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
+                    color: "rgba(255,255,255,0.4)", transition: "background 0.2s, color 0.2s",
                   }}
-                  onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(124,58,237,0.18)"; el.style.color = "#a78bfa"; }}
-                  onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(124,58,237,0.08)"; el.style.color = "var(--text-muted)"; }}
+                  onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(255,107,0,0.15)"; el.style.color = "#ff6b00"; }}
+                  onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(255,255,255,0.05)"; el.style.color = "rgba(255,255,255,0.4)"; }}
                 >
                   <Icon size={15} />
                 </motion.a>
@@ -82,20 +89,20 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(footerLinks).map(([group, links]) => (
             <div key={group} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <h3 style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", margin: 0 }}>{group}</h3>
+              <h3 style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", margin: 0 }}>{group}</h3>
               <ul style={{ display: "flex", flexDirection: "column", gap: "0.625rem", listStyle: "none", padding: 0, margin: 0 }}>
                 {links.map((link) => (
                   <li key={link.label}>
                     {"external" in link && link.external ? (
-                      <a href={link.href} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", fontSize: "0.83rem", color: "var(--text-secondary)", textDecoration: "none" }}
-                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#a78bfa"; }}
-                        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)"; }}>
+                      <a href={link.href} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", fontSize: "0.83rem", color: "rgba(255,255,255,0.6)", textDecoration: "none", transition: "color 0.2s" }}
+                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#ea580c"; }}
+                        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}>
                         {link.label}<ArrowUpRight size={11} style={{ opacity: 0.5 }} />
                       </a>
                     ) : (
-                      <Link href={link.href} style={{ fontSize: "0.83rem", color: "var(--text-secondary)", textDecoration: "none" }}
-                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#a78bfa"; }}
-                        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)"; }}>
+                      <Link href={link.href} style={{ fontSize: "0.83rem", color: "rgba(255,255,255,0.6)", textDecoration: "none", transition: "color 0.2s" }}
+                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#ea580c"; }}
+                        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}>
                         {link.label}
                       </Link>
                     )}
@@ -108,17 +115,20 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1rem", paddingTop: "1.75rem" }}>
-          <p style={{ fontSize: "0.78rem", color: "var(--text-muted)", display: "flex", alignItems: "center", gap: "0.3rem", margin: 0 }}>
-            © {new Date().getFullYear()} Webis. Made with <Heart size={12} color="#f97316" fill="#f97316" /> in India.
+          <p style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.4)", display: "flex", alignItems: "center", gap: "0.3rem", margin: 0 }}>
+            © {new Date().getFullYear()} Webis. Made with <Heart size={12} color="#ea580c" fill="#ea580c" /> in Pune, India.
           </p>
           <div style={{ display: "flex", gap: "1.5rem" }}>
-            {["Privacy Policy", "Terms of Service"].map((t) => (
-              <Link key={t} href="#" style={{ fontSize: "0.78rem", color: "var(--text-muted)", textDecoration: "none" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#a78bfa"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; }}>
-                {t}
-              </Link>
-            ))}
+            <Link href="/privacy" style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.4)", textDecoration: "none", transition: "color 0.2s" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#ea580c"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.4)"; }}>
+                Privacy Policy
+            </Link>
+            <Link href="/terms" style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.4)", textDecoration: "none", transition: "color 0.2s" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#ea580c"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.4)"; }}>
+                Terms of Service
+            </Link>
           </div>
         </div>
       </div>

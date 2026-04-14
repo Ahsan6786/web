@@ -52,8 +52,8 @@ function FAQItem({ faq, isOpen, onClick }: { faq: typeof faqs[0], isOpen: boolea
         <div 
           className="flex-shrink-0 ml-4 flex items-center justify-center w-8 h-8 rounded-full"
           style={{ 
-            background: isOpen ? "rgba(124, 58, 237, 0.1)" : "var(--bg-input)",
-            color: isOpen ? "var(--brand-purple)" : "var(--text-muted)",
+            background: isOpen ? "var(--glow-primary)" : "var(--bg-input)",
+            color: isOpen ? "var(--brand-primary)" : "var(--text-muted)",
             transition: "all 0.3s ease"
           }}
         >
@@ -86,7 +86,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number>(0);
 
   return (
-    <section id="faq" style={{ background: "var(--bg-primary)", position: "relative", padding: "7rem 0 4rem" }}>
+    <section id="faq" style={{ background: "var(--bg-primary)", position: "relative", padding: "7rem 0 4rem", contain: "paint" }}>
       <div style={{ maxWidth: "800px", margin: "0 auto", padding: "0 1.5rem", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: "4rem" }}>
           <SectionHeading

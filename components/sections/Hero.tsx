@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Zap } from "lucide-react";
 import dynamic from "next/dynamic";
+import Magnetic from "@/components/animations/Magnetic";
 
 const GalaxyCanvas = dynamic(() => import("@/components/animations/GalaxyCanvas"), { ssr: false });
 
@@ -77,14 +78,13 @@ function Cursor() {
     <span
       style={{
         display: "inline-block",
-        width: "3px",
-        height: "0.85em",
-        background: "linear-gradient(180deg, #e879f9, #a78bfa)",
+        background: "var(--gradient-brand)",
         borderRadius: "2px",
         verticalAlign: "middle",
         marginLeft: "4px",
         opacity: visible ? 1 : 0,
         transition: "opacity 0.08s",
+        boxShadow: "0 0 10px var(--brand-accent)",
       }}
     />
   );
@@ -149,10 +149,21 @@ export default function Hero() {
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
-        backgroundColor: "var(--bg-primary)",
-        backgroundImage: "var(--hero-bg-image)",
+        background: "var(--hero-bg-deep)",
+        contain: "paint",
       }}
     >
+      {/* ── Nebula Glow (Blue & Purple) ── */}
+      <div 
+        aria-hidden 
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "radial-gradient(circle at 80% 20%, rgba(217, 70, 239, 0.18) 0%, transparent 60%), radial-gradient(circle at 15% 45%, rgba(37, 99, 235, 0.12) 0%, transparent 55%), radial-gradient(circle at 50% 60%, rgba(236, 72, 153, 0.08) 0%, transparent 60%)",
+          zIndex: 0,
+          pointerEvents: "none"
+        }}
+      />
       {/* ── Galaxy Canvas ── */}
       {mounted && <GalaxyCanvas />}
 
@@ -162,26 +173,12 @@ export default function Hero() {
         style={{
           position: "absolute",
           inset: 0,
-          background: "radial-gradient(ellipse 80% 65% at 50% 50%, transparent 30%, var(--hero-vignette) 100%)",
+          background: "radial-gradient(ellipse 80% 65% at 50% 50%, transparent 30%, var(--hero-vignette-deep) 100%)",
           zIndex: 1,
           pointerEvents: "none",
         }}
       />
 
-      {/* ── Bottom fade ── */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: "180px",
-          background: "linear-gradient(transparent, var(--bg-primary))",
-          zIndex: 2,
-          pointerEvents: "none",
-        }}
-      />
 
       {/* ── Foreground content ── */}
       <div
@@ -194,114 +191,156 @@ export default function Hero() {
           padding: "0 1.5rem",
           textAlign: "center",
           willChange: "transform",
-          paddingTop: "5rem",
+          paddingTop: "4rem",
           paddingBottom: "2rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
         }}
       >
+
+
         {/* Typewriter Headline */}
         <motion.div {...fadeUp(0)}>
           <h1
             style={{
               fontWeight: 900,
               fontSize: "clamp(2.6rem, 8.5vw, 5.8rem)",
-              lineHeight: 1.08,
+              lineHeight: 1.1,
               letterSpacing: "-0.03em",
               marginBottom: "2.75rem",
-              minHeight: "2.6em",      // reserve space so layout doesn't jump
+              minHeight: "2.4em",      // Increased space for stability
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.25rem"
             }}
           >
             {/* Line 1 */}
-            <span style={{ display: "block", color: "#f0eaff" }}>
+            <span style={{ display: "block", color: "#f0eaff", minHeight: "1.1em" }}>
               {typed[0]}
               {/* Show cursor on active line */}
               {typed[1] === "" && <Cursor />}
             </span>
 
             {/* Line 2 — gradient */}
-            {typed[1] && (
-              <span
-                style={{
-                  display: "block",
-                  background: "linear-gradient(135deg, #e879f9 0%, #a78bfa 45%, #818cf8 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                {typed[1]}
-                {!allDone && <Cursor />}
-              </span>
-            )}
+            <span
+              style={{
+                display: "block",
+                minHeight: "1.1em",
+                background: "var(--gradient-cta)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                visibility: typed[1] ? "visible" : "hidden",
+                opacity: typed[1] ? 1 : 0,
+                transition: "opacity 0.4s ease"
+              }}
+            >
+              {typed[1] || "Placeholder"} 
+              {!allDone && typed[1] && <Cursor />}
+            </span>
           </h1>
         </motion.div>
 
-        {/* CTA — fades in only after typing is done */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: allDone ? 1 : 0, y: allDone ? 0 : 18 }}
+        {/* CTA — fade */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: allDone ? 1 : 0, y: allDone ? 0 : 20 }}
           transition={{ duration: 0.65, ease: "easeOut" }}
-          style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}
+          style={{ 
+            display: "flex", 
+            flexWrap: "wrap", 
+            gap: "1.5rem", 
+            justifyContent: "center",
+            marginTop: "3rem" // Improved spacing from headline
+          }}
         >
-          <motion.a
-            href="/#contact"
-            className="btn btn-primary"
-            style={{ fontSize: "0.95rem", padding: "0.9rem 2.25rem", gap: "0.6rem" }}
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            Get Your Website <ArrowRight size={17} />
-          </motion.a>
-          <motion.a
-            href="/#portfolio"
-            className="btn btn-secondary"
-            style={{ fontSize: "0.95rem", padding: "0.9rem 2rem" }}
-            whileHover={{ scale: 1.03, y: -2 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            View Our Work
-          </motion.a>
+          <Magnetic amount={0.25}>
+            <motion.a
+              href="/#contact"
+              className="btn btn-primary"
+              style={{ 
+                position: "relative",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "0.95rem", 
+                padding: "1rem 2.8rem", // More prominent size
+                gap: "0.75rem", 
+                borderRadius: "16px",
+                overflow: "hidden",
+                background: "rgba(37, 99, 235, 0.2)", // Branded glass tint
+                backdropFilter: "blur(32px) saturate(210%)",
+                WebkitBackdropFilter: "blur(32px) saturate(210%)",
+                border: "1.2px solid rgba(255,255,255,0.25)",
+                boxShadow: "0 10px 40px rgba(37, 99, 235, 0.15), inset 0 0 16px rgba(255,255,255,0.1)",
+                color: "white",
+                textDecoration: "none",
+                fontWeight: 700
+              }}
+              whileHover={{ scale: 1.05, y: -4, boxShadow: "0 15px 50px rgba(37, 99, 235, 0.25)" }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {/* Liquid Wave Effect */}
+              <motion.div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "radial-gradient(circle at 50% 120%, rgba(255,255,255,0.25) 0%, transparent 60%)",
+                }}
+                animate={{
+                  y: [0, -8, 0],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <span style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                Get Started <ArrowRight size={20} />
+              </span>
+            </motion.a>
+          </Magnetic>
+
+          <Magnetic amount={0.15}>
+            <motion.a
+              href="/#portfolio"
+              className="glass-panel"
+              style={{ 
+                position: "relative",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "0.95rem", 
+                padding: "1rem 2.8rem", 
+                borderRadius: "16px",
+                color: "var(--text-primary)",
+                textDecoration: "none",
+                fontWeight: 700,
+                border: "1.2px solid rgba(255,255,255,0.25)",
+                transition: "all 0.3s ease",
+                overflow: "hidden",
+                background: "rgba(255, 255, 255, 0.05)",
+                backdropFilter: "blur(32px) saturate(210%)",
+                WebkitBackdropFilter: "blur(32px) saturate(210%)",
+                boxShadow: "inset 0 0 16px rgba(255, 255, 255, 0.05)"
+              }}
+              whileHover={{ 
+                scale: 1.05, 
+                y: -4, 
+                background: "rgba(255,255,255,0.15)",
+                boxShadow: "0 15px 50px rgba(255,255,255,0.1)" 
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <span style={{ position: "relative", zIndex: 1 }}>
+                View Work
+              </span>
+            </motion.a>
+          </Magnetic>
         </motion.div>
       </div>
 
-      {/* ── Scroll indicator ── */}
-      <motion.div
-        style={{
-          position: "absolute",
-          bottom: "2rem",
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "0.5rem",
-          opacity: 0.4,
-          zIndex: 10,
-        }}
-        animate={{ y: [0, 9, 0] }}
-        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" as const }}
-      >
-        <div
-          style={{
-            width: "22px",
-            height: "36px",
-            borderRadius: "11px",
-            border: "1.5px solid rgba(232,121,249,0.5)",
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "center",
-            paddingTop: "5px",
-          }}
-        >
-          <motion.div
-            style={{ width: "3px", height: "7px", borderRadius: "2px", background: "#e879f9" }}
-            animate={{ y: [0, 10, 0], opacity: [1, 0, 1] }}
-            transition={{ duration: 2.2, repeat: Infinity }}
-          />
-        </div>
-        <span style={{ fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#7c3aed" }}>
-          Scroll
-        </span>
-      </motion.div>
     </section>
   );
 }

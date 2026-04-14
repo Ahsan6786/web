@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowLeft, ArrowRight, Tag, TrendingUp } from "lucide-react";
+import { 
+  ArrowLeft, TrendingUp, Tag, ArrowRight, 
+  ExternalLink, Search
+} from "lucide-react";
 import { projects } from "@/lib/data";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -48,18 +51,18 @@ export default async function ProjectPage({ params }: PageProps) {
       <Navbar />
       <main style={{ background: "var(--bg-primary)", minHeight: "100vh" }}>
         {/* Hero banner */}
-        <div
-          className="relative w-full flex items-center justify-center overflow-hidden"
-          style={{ height: "50vh", minHeight: "360px", background: gradient }}
-        >
-          {project.image ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img 
-              src={project.image} 
-              alt={project.title} 
-              className="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-overlay"
-            />
-          ) : (
+        {project.image ? (
+          <div className="w-full flex justify-center bg-transparent mt-12 mb-8 px-4 sm:px-8">
+            <div className="w-full max-w-[1100px] rounded-xl sm:rounded-2xl overflow-hidden" style={{ boxShadow: "0 25px 50px -12px rgba(0,0,0,0.15)", border: "1px solid var(--border-subtle)" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={project.image} alt={project.title} style={{ display: "block", width: "100%", height: "auto", margin: 0 }} />
+            </div>
+          </div>
+        ) : (
+          <div
+            className="relative w-full flex items-center justify-center overflow-hidden"
+            style={{ height: "50vh", minHeight: "360px", background: gradient }}
+          >
             <div
               className="absolute inset-0"
               style={{
@@ -67,29 +70,29 @@ export default async function ProjectPage({ params }: PageProps) {
                   "radial-gradient(circle at 30% 50%, rgba(255,255,255,0.2) 0%, transparent 60%), radial-gradient(circle at 70% 20%, rgba(255,255,255,0.15) 0%, transparent 50%)",
               }}
             />
-          )}
-          <div className="relative z-10 text-center px-6">
-            <span
-              className="inline-block px-3 py-1.5 rounded-full text-xs font-semibold text-white mb-4"
-              style={{ background: "rgba(0,0,0,0.3)" }}
-            >
-              {project.category}
-            </span>
-            <h1
-              className="font-black text-white tracking-tight"
-              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: 1.1 }}
-            >
-              {project.title}
-            </h1>
-            <div
-              className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-xl font-bold text-white"
-              style={{ background: "rgba(0,0,0,0.35)" }}
-            >
-              <TrendingUp size={16} />
-              ↑{project.stats.increase} {project.stats.metric}
+            <div className="relative z-10 text-center px-6">
+              <span
+                className="inline-block px-3 py-1.5 rounded-full text-xs font-semibold text-white mb-4"
+                style={{ background: "rgba(0,0,0,0.3)" }}
+              >
+                {project.category}
+              </span>
+              <h1
+                className="font-black text-white tracking-tight"
+                style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: 1.1 }}
+              >
+                {project.title}
+              </h1>
+              <div
+                className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-xl font-bold text-white"
+                style={{ background: "rgba(0,0,0,0.35)" }}
+              >
+                <TrendingUp size={16} />
+                ↑{project.stats.increase} {project.stats.metric}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Content */}
         <div className="mx-auto px-6 py-16" style={{ maxWidth: "860px" }}>
@@ -103,8 +106,8 @@ export default async function ProjectPage({ params }: PageProps) {
             Back to Portfolio
           </Link>
 
-          {/* Content Block */}
-          {project.slug === "blingish" ? (
+          {/* Content Block — Dynamic Mockup Rendering */}
+          {project.mockupConfig ? (
             <div className="mb-16">
               <div
                 className="rounded-2xl p-6 sm:p-8 mb-10 text-center"
@@ -116,17 +119,45 @@ export default async function ProjectPage({ params }: PageProps) {
                 <h2 className="font-bold text-xl mb-4" style={{ color: "var(--text-primary)" }}>
                   The Digital Experience
                 </h2>
-                <p className="leading-relaxed max-w-2xl mx-auto" style={{ color: "var(--text-secondary)" }}>
+                <p className="leading-relaxed max-w-2xl mx-auto mb-8" style={{ color: "var(--text-secondary)" }}>
                   {project.longDescription}
                 </p>
+
+                <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
+                  {project.websiteUrl && (
+                    <a 
+                      href={project.websiteUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-primary inline-flex items-center gap-2"
+                      style={{ padding: "0.75rem 1.5rem" }}
+                    >
+                      Visit Live Website <ExternalLink size={16} />
+                    </a>
+                  )}
+
+                  {project.mockupConfig.googleRanking && (
+                    <div 
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold"
+                      style={{ 
+                        background: "rgba(34, 197, 94, 0.1)", 
+                        color: "#22c55e",
+                        border: "1px solid rgba(34, 197, 94, 0.2)"
+                      }}
+                    >
+                      <Search size={14} />
+                      Ranking #1 on Google
+                    </div>
+                  )}
+                </div>
               </div>
 
-              {/* Full Mockup Frame */}
+               {/* Full Mockup Frame */}
               <div className="flex flex-col items-center w-full px-2 sm:px-0 mt-12">
                 <div 
                   className="w-full max-w-[1100px] flex flex-col rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-700 hover:scale-[1.002]" 
                   style={{ 
-                    boxShadow: "0 30px 60px -15px rgba(0, 0, 0, 0.5), 0 0 120px rgba(251, 113, 133, 0.15)", // Rose-gold premium soft shadow
+                    boxShadow: `0 30px 60px -15px rgba(0, 0, 0, 0.5), 0 0 120px ${project.mockupConfig.glowColor}`,
                     border: "1px solid var(--border-subtle)" 
                   }}
                 >
@@ -138,23 +169,31 @@ export default async function ProjectPage({ params }: PageProps) {
                       <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
                     </div>
                     <div className="flex-1 h-6 flex items-center justify-center mx-4 rounded-md bg-black/10 dark:bg-white/5 opacity-80 overflow-hidden max-w-[300px] relative">
-                      <span className="text-[10px] font-medium text-black/60 dark:text-white/60 tracking-wider">blingish.com</span>
+                      <span className="text-[10px] font-medium text-black/60 dark:text-white/60 tracking-wider">
+                        {project.mockupConfig.url}
+                      </span>
                     </div>
                   </div>
                   
                   {/* Stitched Landing Page Preview */}
                   <div className="flex flex-col w-full leading-[0] font-[0px] overflow-hidden bg-black object-cover">
-                    {Array.from({ length: 13 }).map((_, i) => (
-                      <div key={i} className="w-full relative m-0 p-0 leading-none flex border-none">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img 
-                          src={`/blingish-photos/${i + 1}.png`} 
-                          alt={`Blingish Experience Part ${i + 1}`} 
-                          className="w-full h-auto block select-none m-0 p-0 border-none outline-none align-bottom"
-                          loading="lazy"
-                        />
-                      </div>
-                    ))}
+                    {Array.from({ length: project.mockupConfig.count }).map((_, i) => {
+                      const fileName = project.mockupConfig?.sequenceStyle === "alphabet" 
+                        ? String.fromCharCode(97 + i) 
+                        : (i + 1).toString();
+                      
+                      return (
+                        <div key={i} className="w-full relative m-0 p-0 leading-none flex border-none">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img 
+                            src={`${project.mockupConfig?.folder}/${project.mockupConfig?.prefix}${fileName}${project.mockupConfig?.suffix}`} 
+                            alt={`${project.title} Experience Part ${i + 1}`} 
+                            className="w-full h-auto block select-none m-0 p-0 border-none outline-none align-bottom"
+                            loading="lazy"
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

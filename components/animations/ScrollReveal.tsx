@@ -52,9 +52,10 @@ export default function ScrollReveal({
       ref={ref}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, margin: "-80px" }}
+      viewport={{ once, margin: "-60px" }}
       variants={variants}
-      className={className}
+      className={`${className} stable-gpu-surface`}
+      style={{ willChange: "opacity, transform" }}
     >
       {children}
     </motion.div>

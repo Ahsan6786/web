@@ -47,15 +47,17 @@ export default function GalaxyCanvas() {
     };
 
     const initStars = () => {
-      // 150 stars max, very clean and sharp
-      const count = Math.min(150, Math.floor((canvas.width * canvas.height) / 8000));
+      const isMobile = window.innerWidth < 768;
+      // Adaptive count: Halved on mobile for "fast like hell" performance
+      const baseDensity = isMobile ? 12000 : 8000;
+      const count = Math.min(isMobile ? 80 : 150, Math.floor((canvas.width * canvas.height) / baseDensity));
+      
       stars = Array.from({ length: count }, () => {
         const tintRoll = Math.random();
         return {
-          // Keep floating points but will be rounded in drawing for crispness
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          size: Math.random() > 0.85 ? 2 : 1, // 85% single pixel, 15% tiny cross
+          size: Math.random() > 0.85 ? 2 : 1,
           baseOpacity: Math.random() * 0.6 + 0.3,
           twinkleSpeed: Math.random() * 0.04 + 0.015,
           twinklePhase: Math.random() * Math.PI * 2,
@@ -74,7 +76,7 @@ export default function GalaxyCanvas() {
       x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
       y: Math.random() * canvas.height * 0.4,
       len: 120 + Math.random() * 180,
-      speed: 15 + Math.random() * 12, // High speed, bounded by delta time
+      speed: 7 + Math.random() * 6, // Reduced speed for cinematic feel
       opacity: 0,
       active: true,
       angle: 195 + Math.random() * 35,
@@ -82,7 +84,7 @@ export default function GalaxyCanvas() {
     });
 
     const scheduleShootingStar = (slot: number) => {
-      const delay = 1000 + Math.random() * 2000;
+      const delay = 4000 + Math.random() * 6000; // Increased delay for maturity
       shootingTimers[slot] = setTimeout(() => {
         shooters[slot] = spawnShootingStar();
         scheduleShootingStar(slot);

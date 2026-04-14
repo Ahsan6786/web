@@ -38,7 +38,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-theme="dark" suppressHydrationWarning>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -46,9 +46,31 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900&display=swap"
           rel="stylesheet"
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Webis Digital Agency",
+              "url": "https://webis.in",
+              "logo": "https://webis.in/logo.png",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+91-9162248786",
+                "contactType": "customer service",
+                "email": "mitraai0001@gmail.com"
+              },
+              "sameAs": [
+                "https://ziyamuradkhan.vercel.app/"
+              ]
+            })
+          }}
+        />
       </head>
       <body className="antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+        <div className="noise" />
+        {children}
       </body>
     </html>
   );

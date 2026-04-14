@@ -37,133 +37,177 @@ export const services = [
   },
 ];
 
-export const projects = [
+export interface Project {
+  slug: string;
+  title: string;
+  category: string;
+  description: string;
+  longDescription: string;
+  image: string;
+  websiteUrl: string;
+  gradient: string;
+  stats: { increase: string; metric: string };
+  mockupConfig?: {
+    folder: string;
+    prefix: string;
+    suffix: string;
+    count: number;
+    url: string;
+    glowColor: string;
+    sequenceStyle: "number" | "alphabet";
+    googleRanking?: boolean;
+  };
+}
+
+export const projects: Project[] = [
   {
     slug: "blingish",
     title: "Blingish – Premium Artificial Jewellery",
     category: "E-Commerce Store",
     description:
-      "A luxurious, elegant e-commerce brand experience with a premium feminine aesthetic, smooth reveal animations, and a seamless shopping journey.",
+      "A luxurious, elegant e-commerce brand experience that ranks #1 on Google for its brand name. Featuring a seamless shopping journey with premium aesthetics.",
     longDescription:
-      "Blingish wanted a digital storefront that exuded the same luxury as their artificial jewellery collection. We crafted a highly immersive e-commerce experience using soft beige and rose gold tones, featuring edge-to-edge product storytelling and seamless cart integration. The result: a 340% increase in online sales during their launch month.",
+      "Blingish wanted a digital storefront that exuded the same luxury as their artificial jewellery collection. We crafted a highly immersive e-commerce experience using soft beige and rose gold tones. Today, it ranks top of Google search results for 'Blingish', delivering a 340% increase in sales growth.",
     image: "/blingish-photos/1.png",
+    websiteUrl: "https://www.blingish.in",
     gradient: "from-amber-400 to-orange-500",
     stats: { increase: "340%", metric: "Sales Growth" },
+    mockupConfig: {
+      folder: "/blingish-photos",
+      prefix: "",
+      suffix: ".png",
+      count: 13,
+      url: "blingish.com",
+      glowColor: "rgba(251, 113, 133, 0.15)",
+      sequenceStyle: "number",
+      googleRanking: true
+    }
   },
   {
-    slug: "bites-co",
-    title: "Bites & Co",
+    slug: "daily-greens",
+    title: "Daily Greens – Healthy Dining Experience",
     category: "Restaurant Website",
     description:
-      "A modern restaurant website with online ordering, real-time table reservations, and dynamic menu management.",
+      "A mouth-watering digital experience for a premium healthy dining brand. Clean, fresh, and conversion-optimized.",
     longDescription:
-      "Bites & Co is a contemporary fusion restaurant that needed a website as vibrant as their menu. We delivered a full digital dining experience — from online ordering to table reservations. Online orders grew by 210% in the first month.",
-    gradient: "from-rose-400 to-pink-500",
-    stats: { increase: "210%", metric: "Online Orders" },
+      "Daily Greens needed a digital presence that reflected their commitment to fresh, organic dining. We built a high-performance restaurant interface that prioritizes visual storytelling and seamless reservations, resulting in a 250% increase in online table bookings.",
+    image: "/daily/a.png",
+    websiteUrl: "https://dailygreens-n12x.vercel.app",
+    gradient: "from-emerald-400 to-teal-500",
+    stats: { increase: "250%", metric: "Booking Growth" },
+    mockupConfig: {
+      folder: "/daily",
+      prefix: "",
+      suffix: ".png",
+      count: 15,
+      url: "dailygreens-n12x.vercel.app",
+      glowColor: "rgba(16, 185, 129, 0.12)",
+      sequenceStyle: "alphabet"
+    }
   },
   {
-    slug: "nova-creative",
-    title: "Nova Creative",
+    slug: "a1-farms",
+    title: "A1 Farms – Agriculture & Fresh Produce",
+    category: "Corporate Website",
+    description:
+      "A clean, professional corporate presence for a leading farm and fresh produce exporter. Focused on transparency and scale.",
+    longDescription:
+      "A1 Farms required a digital platform that could showcase the scale of their operations and the quality of their produce. We delivered a robust corporate site that highlights their field-to-table process, significantly improving B2B engagement and trust.",
+    image: "/farm/f1.png",
+    websiteUrl: "https://a1farms.in",
+    gradient: "from-sky-400 to-blue-500",
+    stats: { increase: "180%", metric: "B2B Queries" },
+    mockupConfig: {
+      folder: "/farm",
+      prefix: "f",
+      suffix: ".png",
+      count: 8,
+      url: "a1farms.in",
+      glowColor: "rgba(56, 189, 248, 0.12)",
+      sequenceStyle: "number"
+    }
+  },
+  {
+    slug: "ziya-murad-khan",
+    title: "Ziya Murad Khan – Personal Branding Portfolio",
     category: "Portfolio Website",
     description:
-      "A visually striking creative agency portfolio with case studies, animated transitions, and a custom CMS.",
+      "A sophisticated and dynamic personal portfolio for an industry-leading creative. Focused on high-impact visual storytelling.",
     longDescription:
-      "A fast-growing FinTech startup needed a secure, highly scalable platform to handle concurrent transactions and real-time data streaming. We architected a custom Nuxt & Node.js solution that led to a 150% boost in user acquisition within 6 weeks.",
-    gradient: "from-violet-400 to-indigo-500",
-    stats: { increase: "150%", metric: "User Acquisition" },
-  },
-  {
-    slug: "taskflow-app",
-    title: "TaskFlow App",
-    category: "Custom Web App",
-    description:
-      "A B2B project management SaaS platform with real-time collaboration, Kanban boards, and AI task suggestions.",
-    longDescription:
-      "This architecture firm wanted a minimalist, ultra-fast portfolio that lets their work speak for itself. We built a custom CMS integration that allows them to effortlessly update their case studies, achieving a perfect PageSpeed score.",
-    gradient: "from-emerald-400 to-cyan-500",
-    stats: { increase: "100", metric: "Lighthouse Score" },
-  },
-  {
-    slug: "atlas-finance",
-    title: "Atlas Finance",
-    category: "Business Website",
-    description:
-      "A trust-building financial advisory firm website with secure client portal and animated data visualizations.",
-    longDescription:
-      "We digitized physical healthcare consultations by building an intuitive telehealth portal. It features HIPAA-compliant WebRTC video calls, integrated calendar booking, and interactive patient history dashboards.",
-    gradient: "from-sky-400 to-blue-500",
-    stats: { increase: "3x", metric: "Booking Rate" },
-  },
-  {
-    slug: "aria-fashion",
-    title: "Aria Fashion",
-    category: "E-Commerce",
-    description:
-      "A luxury fashion e-commerce experience with virtual try-on, editorial lookbooks, and a seamless checkout.",
-    longDescription:
-      "Created a robust learning management system for a prominent design agency, offering interactive courses, project submissions, and peer reviews. The platform now supports over 5,000 active concurrent students without breaking a sweat.",
+      "Ziya Murad Khan needed a portfolio that matched his reputation for visionary creativity. We built a high-performance experience that blends bold typography with fluid layouts, ensuring his work is the star of the digital stage.",
+    image: "/ziya/z1.png",
+    websiteUrl: "https://ziyamuradkhan.vercel.app/",
     gradient: "from-fuchsia-400 to-rose-400",
-    stats: { increase: "5k+", metric: "Active Students" },
+    stats: { increase: "Perf", metric: "Lighthouse" },
+    mockupConfig: {
+      folder: "/ziya",
+      prefix: "z",
+      suffix: ".png",
+      count: 10,
+      url: "ziyamuradkhan.vercel.app",
+      glowColor: "rgba(232, 121, 249, 0.12)",
+      sequenceStyle: "number"
+    }
   },
 ];
 
 export const stats = [
-  { label: "Projects Completed", value: 50, suffix: "+", description: "Across 12 countries" },
+  { label: "Projects Completed", value: 55, suffix: "+", description: "Across 12 countries" },
+  { label: "Fastest Delivery", value: 5, suffix: "h", description: "Record turnaround" },
   { label: "Client Satisfaction", value: 98, suffix: "%", description: "5-star rated" },
-  { label: "Performance Boost", value: 3, suffix: "x", description: "Average speed improvement" },
-  { label: "Support Response", value: 2, suffix: "hr", description: "Average response time" },
+  { label: "Support Response", value: 1, suffix: "hr", description: "Average response time" },
 ];
 
 export const testimonials = [
   {
     id: 1,
-    name: "Ayesha Khan",
+    name: "Harsh Vardhan",
     role: "Founder, Blingish",
     content:
-      "Webis didn't just build a store — they crafted a high-end digital boutique. Our sales tripled within the first month. The rose-gold aesthetic is absolutely stunning, and the shopping experience feels incredible.",
+      "Webis didn't just build a website; they crafted a high-end digital flagship for Blingish. Their ability to translate premium brand values into a technical reality is unmatched. Our conversion rates and brand perception have skyrocketed since launch.",
     rating: 5,
-    initials: "AK",
-    gradient: "from-rose-400 to-pink-500",
+    initials: "HV",
+    gradient: "from-amber-400 to-orange-500",
   },
   {
     id: 2,
-    name: "Priya Sharma",
-    role: "Owner, Bites & Co",
+    name: "Ziya Murad Khan",
+    role: "Proprietor, Daily Greens",
     content:
-      "I was blown away by how quickly Webis understood our brand. The restaurant website they built feels like a Michelin-starred experience online. Online orders went through the roof!",
+      "The Webis team immediately understood my requirements and delivered a clean, professional website exactly as needed. Their response time and technical execution made the entire process seamless.",
     rating: 5,
-    initials: "PS",
-    gradient: "from-rose-500 to-pink-500",
+    initials: "UH",
+    gradient: "from-rose-400 to-pink-500",
   },
   {
     id: 3,
-    name: "Kiran Nair",
-    role: "Creative Director, Nova Creative",
+    name: "Yassh Agarwal",
+    role: "Fitness Professional",
     content:
-      "As a design studio, we had extremely high standards. Webis exceeded every single one. The transitions, the animations, the attention to detail — it's world-class.",
+      "Webis understood what I needed with very little conversation and delivered exactly the website I had in mind. Highly efficient and result-oriented agency.",
     rating: 5,
-    initials: "KN",
-    gradient: "from-violet-500 to-purple-500",
+    initials: "ZK",
+    gradient: "from-violet-400 to-indigo-500",
   },
   {
     id: 4,
-    name: "Rohan Kapoor",
-    role: "CTO, TaskFlow",
+    name: "Dr. Vaishali Imam",
+    role: "Pediatrician",
     content:
-      "The TaskFlow platform Webis built handles 200+ concurrent teams without breaking a sweat. Their technical depth and design sensibility is a rare combination.",
+      "Webis did an exceptional job in bringing my vision to life. They built the website exactly the way I wanted—clean, modern, and highly functional. Their attention to detail and willingness to accommodate every request truly set them apart. I’m extremely satisfied and highly recommend Webis for anyone looking for a reliable and talented team.",
     rating: 5,
-    initials: "RK",
-    gradient: "from-emerald-500 to-teal-500",
+    initials: "TS",
+    gradient: "from-emerald-400 to-teal-500",
   },
   {
     id: 5,
-    name: "Divya Pillai",
-    role: "MD, Atlas Finance",
+    name: "Fauzan Khan",
+    role: "Manager, A1 Farms",
     content:
-      "Our new website has transformed how clients perceive us. The secure dashboard and data visualizations communicate trust and expertise exactly as we needed.",
+      "Working with Webis was a game-changer for our B2B reach. They engineered a robust, high-performance platform for A1 Farms that has significantly boosted our lead generation and digital trust score.",
     rating: 5,
-    initials: "DP",
-    gradient: "from-sky-500 to-blue-500",
+    initials: "TK",
+    gradient: "from-sky-400 to-blue-500",
   },
 ];
 
@@ -181,8 +225,8 @@ export const pricingTiers = [
       "Contact form",
       "Basic SEO setup",
       "Google Analytics",
+      "Professional Documentation",
       "1 month support",
-      "SSL certificate",
     ],
     notIncluded: ["Custom animations", "CMS integration", "E-commerce"],
     cta: "Get Started",
@@ -204,6 +248,7 @@ export const pricingTiers = [
       "Performance optimization",
       "3 months priority support",
       "Analytics dashboard",
+      "Hyper-Speed Delivery Available",
     ],
     notIncluded: ["Custom web app features"],
     cta: "Most Popular — Get Growth",
@@ -226,6 +271,7 @@ export const pricingTiers = [
       "12 months dedicated support",
       "Performance SLA",
       "Custom AI integrations",
+      "Hyper-Speed Delivery (5H Guarantee)",
     ],
     notIncluded: [],
     cta: "Let's Talk",
@@ -235,8 +281,8 @@ export const pricingTiers = [
 export const whyWebis = [
   {
     icon: "Zap",
-    title: "Lightning Fast",
-    description: "Every site we build scores 95+ on Google PageSpeed. Speed isn't a feature — it's the foundation.",
+    title: "Hyper-Speed Development",
+    description: "Every site we build scores 95+ on Google PageSpeed. We hold a record 5-hour fastest delivery. Speed isn't just a feature — it's our identity.",
   },
   {
     icon: "Palette",

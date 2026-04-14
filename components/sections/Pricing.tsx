@@ -11,12 +11,51 @@ export default function Pricing() {
   const [hovered, setHovered] = useState<string | null>(null);
 
   return (
-    <section id="pricing" data-theme="dark" className="section" style={{ background: "var(--bg-surface)", position: "relative", overflow: "hidden" }}>
-      {/* Galaxy ambient */}
-      <div aria-hidden style={{ position: "absolute", top: "-80px", right: "10%", width: "500px", height: "500px", background: "radial-gradient(ellipse, rgba(124,58,237,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div aria-hidden style={{ position: "absolute", bottom: "-60px", left: "12%", width: "400px", height: "400px", background: "radial-gradient(ellipse, rgba(37,99,235,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
+    <section
+      id="pricing"
+      className="section"
+      style={{
+        background: "var(--bg-surface)",
+        position: "relative",
+        overflow: "hidden",
+        contain: "paint",
+      }}
+    >
+      {/* Glow */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: "-80px",
+          right: "10%",
+          width: "500px",
+          height: "500px",
+          background:
+            "radial-gradient(ellipse, var(--glow-primary) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          bottom: "-60px",
+          left: "12%",
+          width: "400px",
+          height: "400px",
+          background:
+            "radial-gradient(ellipse, rgba(37,99,235,0.07) 0%, transparent 70%)",
+        }}
+      />
 
-      <div style={{ maxWidth: "1320px", margin: "0 auto", padding: "0 1.5rem", position: "relative", zIndex: 1 }}>
+      <div
+        style={{
+          maxWidth: "1320px",
+          margin: "0 auto",
+          padding: "0 1.5rem",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
         <ScrollReveal>
           <SectionHeading
             label="Pricing"
@@ -28,99 +67,167 @@ export default function Pricing() {
           />
         </ScrollReveal>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: "1.5rem", alignItems: "stretch" }}>
+        {/* GRID */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
+            gap: "1.5rem",
+          }}
+        >
           {pricingTiers.map((tier, i) => (
             <ScrollReveal key={tier.id} delay={i * 0.1} direction="up">
               <motion.div
-                data-theme="light"
-                onHoverStart={() => setHovered(tier.id)}
-                onHoverEnd={() => setHovered(null)}
-                animate={{
-                  y: hovered === tier.id ? -6 : 0,
-                  boxShadow: hovered === tier.id
-                    ? tier.popular
-                      ? "0 8px 32px rgba(0,0,0,0.08), 0 0 60px rgba(124,58,237,0.15)"
-                      : "0 8px 32px rgba(0,0,0,0.08)"
-                    : tier.popular
-                      ? "0 4px 16px rgba(0,0,0,0.04), 0 0 0 1px rgba(124,58,237,0.35)"
-                      : "0 4px 16px rgba(0,0,0,0.04)",
+                whileHover={{
+                  y: -8,
+                  scale: 1.005,
+                  boxShadow: "0 20px 48px rgba(0,0,0,0.18)",
                 }}
-                transition={{ duration: 0.28, ease: "easeOut" as const }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="stable-gpu-surface"
                 style={{
-                  height: "100%", display: "flex", flexDirection: "column",
-                  borderRadius: "24px", overflow: "hidden",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "24px",
+                  overflow: "hidden",
                   background: "var(--bg-card)",
-                  border: tier.popular ? "1px solid rgba(124,58,237,0.4)" : "1px solid var(--border-subtle)",
-                  willChange: "transform, box-shadow",
+                  border: tier.popular
+                    ? "1px solid var(--brand-primary)"
+                    : "1px solid var(--border-subtle)",
+                  boxShadow: "0 8px 28px rgba(0,0,0,0.06)",
+                  position: "relative",
+                } as any}
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                  e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
                 }}
               >
+                {/* Spotlight Effect */}
+                <div 
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "radial-gradient(400px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(37, 99, 235, 0.05), transparent 85%)",
+                    pointerEvents: "none",
+                    zIndex: 1
+                  }}
+                />
                 {/* Popular ribbon */}
                 {tier.popular && (
-                  <div style={{ background: "linear-gradient(135deg, #7c3aed, #2563eb 60%, #f97316)", padding: "0.6rem 1rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", fontSize: "0.72rem", fontWeight: 700, color: "white", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                  <div
+                    style={{
+                      background:
+                        "var(--gradient-cta)",
+                      padding: "0.6rem",
+                      textAlign: "center",
+                      fontSize: "0.72rem",
+                      fontWeight: 700,
+                      color: "white",
+                    }}
+                  >
                     <Sparkles size={11} /> Most Popular <Sparkles size={11} />
                   </div>
                 )}
 
-                <div style={{ padding: "2rem", display: "flex", flexDirection: "column", flex: 1 }}>
+                <div
+                  style={{
+                    padding: "2rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    flex: 1,
+                  }}
+                >
                   {/* Name */}
-                  <div style={{ marginBottom: "1.5rem" }}>
-                    <h3 style={{ fontWeight: 800, fontSize: "1.15rem", color: "var(--text-primary)", margin: "0 0 0.4rem" }}>{tier.name}</h3>
-                    <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", lineHeight: 1.5, margin: 0 }}>{tier.description}</p>
-                  </div>
+                  <h3
+                    style={{
+                      fontWeight: 800,
+                      fontSize: "1.15rem",
+                      color: "var(--text-primary)",
+                      zIndex: 2,
+                    }}
+                  >
+                    {tier.name}
+                  </h3>
+
+                  <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", zIndex: 2 }}>
+                    {tier.description}
+                  </p>
 
                   {/* Price */}
-                  <div style={{ marginBottom: "1.75rem" }}>
+                  <div style={{ margin: "1.5rem 0", zIndex: 2 }}>
                     <span
                       style={{
                         fontWeight: 900,
-                        fontSize: tier.price === "Custom" ? "2.4rem" : "2.8rem",
-                        background: tier.popular ? "var(--gradient-text)" : "none",
-                        WebkitBackgroundClip: tier.popular ? "text" : "unset",
-                        WebkitTextFillColor: tier.popular ? "transparent" : "var(--text-primary)",
-                        backgroundClip: tier.popular ? "text" : "unset",
-                        color: tier.popular ? "transparent" : "var(--text-primary)",
-                        lineHeight: 1,
-                        display: "block",
+                        fontSize: "2.8rem",
+                        color: "var(--text-primary)",
                       }}
                     >
                       {tier.price}
                     </span>
-                    <p style={{ fontSize: "0.72rem", color: "var(--text-muted)", marginTop: "0.35rem", fontWeight: 500 }}>{tier.period}</p>
+                    <p style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
+                      {tier.period}
+                    </p>
                   </div>
 
-                  <div style={{ height: "1px", background: "var(--border-subtle)", marginBottom: "1.5rem" }} />
+                  <div
+                    style={{
+                      height: "1px",
+                      background: "var(--border-subtle)",
+                      marginBottom: "1.5rem",
+                      zIndex: 2,
+                    }}
+                  />
 
                   {/* Features */}
-                  <ul style={{ display: "flex", flexDirection: "column", gap: "0.75rem", flex: 1, listStyle: "none", padding: 0, margin: "0 0 1.75rem 0" }}>
+                  <ul style={{ flex: 1, zIndex: 2 }}>
                     {tier.features.map((f) => (
-                      <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", fontSize: "0.84rem" }}>
-                        <span style={{ width: "18px", height: "18px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "1px", background: "var(--brand-glow-p)" }}>
-                          <Check size={10} color="var(--brand-purple)" />
-                        </span>
-                        <span style={{ color: "var(--text-secondary)" }}>{f}</span>
-                      </li>
-                    ))}
-                    {tier.notIncluded.map((f) => (
-                      <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", fontSize: "0.84rem", opacity: 0.4 }}>
-                        <span style={{ width: "18px", height: "18px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "1px", background: "var(--border-subtle)" }}>
-                          <X size={10} color="var(--text-muted)" />
-                        </span>
-                        <span style={{ color: "var(--text-muted)" }}>{f}</span>
+                      <li
+                        key={f}
+                        style={{
+                          display: "flex",
+                          gap: "0.6rem",
+                          fontSize: "0.85rem",
+                          color: "var(--text-primary)",
+                          marginBottom: "0.6rem",
+                        }}
+                      >
+                        <Check size={14} color="var(--brand-primary)" /> {f}
                       </li>
                     ))}
                   </ul>
 
                   {/* CTA */}
-                  <motion.a
+                  <a
                     href="/#contact"
-                    className={tier.popular ? "btn btn-primary" : "btn btn-secondary"}
-                    style={{ justifyContent: "center", width: "100%", gap: "0.5rem" }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.97 }}
+                    className="btn btn-primary"
+                    style={{ 
+                      position: "relative",
+                      marginTop: "1.5rem", 
+                      width: "100%",
+                      overflow: "hidden",
+                    }}
                   >
-                    {tier.id === "enterprise" && <Zap size={14} />}
-                    {tier.cta} {tier.id !== "enterprise" && <ArrowRight size={14} />}
-                  </motion.a>
+                    {/* Liquid Wave Effect */}
+                    <motion.div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "radial-gradient(circle at 50% 120%, rgba(255,255,255,0.2) 0%, transparent 60%)",
+                      }}
+                      animate={{
+                        y: [0, -6, 0],
+                        scale: [1, 1.1, 1],
+                      }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                    <span style={{ position: "relative", zIndex: 1 }}>
+                      {tier.cta} <ArrowRight size={14} />
+                    </span>
+                  </a>
                 </div>
               </motion.div>
             </ScrollReveal>
@@ -128,9 +235,15 @@ export default function Pricing() {
         </div>
 
         <ScrollReveal delay={0.4}>
-          <p style={{ textAlign: "center", fontSize: "0.8rem", color: "var(--text-muted)", marginTop: "2rem" }}>
-            All prices are one-time unless noted.{" "}
-            <a href="/#contact" style={{ color: "var(--brand-purple)", textDecoration: "none" }}>Need something custom?</a>
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: "0.8rem",
+              color: "#777",
+              marginTop: "2rem",
+            }}
+          >
+            All prices are one-time unless noted.
           </p>
         </ScrollReveal>
       </div>

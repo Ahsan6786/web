@@ -4,10 +4,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Send, MessageCircle, Mail, Phone,
-  User, ChevronDown, CheckCircle,
+  User, ChevronDown, CheckCircle, Search
 } from "lucide-react";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import SectionHeading from "@/components/ui/SectionHeading";
 
 /* ── Constants ─────────────────────────────────────── */
 const WA_NUMBER = "919162248786"; // +91 9162248786
@@ -69,9 +68,9 @@ function buildWAMessage(f: FormData) {
 /* ── Shared input style ─────────────────────────────── */
 const inputBase: React.CSSProperties = {
   width: "100%",
-  padding: "0.9rem 1rem 0.9rem 2.75rem",
+  padding: "1rem",
   fontSize: "1rem",
-  borderRadius: "12px",
+  borderRadius: "14px",
   outline: "none",
   color: "var(--text-primary)",
   background: "var(--bg-input)",
@@ -83,7 +82,6 @@ const inputError: React.CSSProperties = {
   border: "1px solid rgba(239,68,68,0.55)",
 };
 
-/* ── Component ──────────────────────────────────────── */
 export default function Contact() {
   const [form, setForm] = useState<FormData>({ name: "", email: "", phone: "", service: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
@@ -102,319 +100,315 @@ export default function Contact() {
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
 
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 800)); // brief UX pause
+    await new Promise((r) => setTimeout(r, 1200)); 
     setLoading(false);
     setSubmitted(true);
 
-    // Open WhatsApp with pre-filled message
     const waUrl = `${WA_BASE}?text=${buildWAMessage(form)}`;
     window.open(waUrl, "_blank", "noopener,noreferrer");
   };
-
-  const quickWAMessage = encodeURIComponent(
-    `Hi Webis! I'm interested in a ${form.service || "website"}.${form.name ? ` My name is ${form.name}.` : ""} Can we talk?`
-  );
 
   return (
     <section
       id="contact"
       className="section"
-      style={{ background: "var(--bg-primary)", position: "relative", overflow: "hidden" }}
+      style={{ background: "var(--bg-primary)", position: "relative", padding: "6rem 0", contain: "paint" }}
     >
-      {/* Galaxy ambient glow */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute", top: "50%", left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "700px", height: "500px",
-          background: "radial-gradient(ellipse, rgba(124,58,237,0.07) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
-
-      <div style={{ maxWidth: "1320px", margin: "0 auto", padding: "0 1.25rem", position: "relative", zIndex: 10 }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 1.5rem" }}>
         <ScrollReveal>
-          <SectionHeading
-            label="Get In Touch"
-            title="Let's Build Something"
-            titleHighlight="Amazing"
-            subtitle="Ready to transform your digital presence? Fill in the form and we'll WhatsApp you within 2 hours."
-            align="center"
-            className="mb-14"
-          />
+          <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                padding: "0.5rem 1rem",
+                borderRadius: "100px",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                color: "var(--brand-primary)",
+                marginBottom: "1rem",
+                background: "rgba(37, 99, 235, 0.05)",
+                border: "1px solid rgba(37, 99, 235, 0.2)"
+              }}
+            >
+              <span style={{ width: "6px", height: "6px", background: "var(--brand-primary)", borderRadius: "50%", boxShadow: "0 0 10px var(--brand-primary)" }} />
+              Pune Based Design Agency
+            </motion.div>
+            <h2 
+              className="font-black tracking-tight mb-4" 
+              style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)", color: "var(--text-primary)", lineHeight: 1 }}
+            >
+              The <span style={{ background: "var(--gradient-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Hyper Dev</span> Team is Ready
+            </h2>
+            <p style={{ color: "var(--text-secondary)", fontSize: "1.2rem", maxWidth: "700px", margin: "0 auto" }}>
+              Ready to Win? We deliver performance at the speed of light. Average response: 1 hour.
+            </p>
+          </div>
         </ScrollReveal>
 
-        {/* ── Two-column layout (stacks on mobile) ── */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr",
-            gap: "2rem",
-          }}
-          className="lg:grid-cols-[5fr_8fr]"
-        >
-          {/* ── Left: contact info ── */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
+          
+          {/* Left Side: Info Chips */}
           <ScrollReveal direction="left">
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-
-              {/* Info cards */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               {[
-                {
-                  icon: MessageCircle,
-                  label: "WhatsApp",
-                  value: "+91 9162248786",
-                  href: WA_BASE,
-                  color: "#25D366",
-                  bg: "rgba(37,211,102,0.1)",
-                  border: "rgba(37,211,102,0.25)",
-                },
-                {
-                  icon: Phone,
-                  label: "Phone",
-                  value: "+91 9162248786",
-                  href: "tel:+919162248786",
-                  color: "#a78bfa",
-                  bg: "rgba(124,58,237,0.1)",
-                  border: "rgba(124,58,237,0.25)",
-                },
-                {
-                  icon: Mail,
-                  label: "Email",
-                  value: "hello@webis.in",
-                  href: "mailto:hello@webis.in",
-                  color: "#60a5fa",
-                  bg: "rgba(37,99,235,0.1)",
-                  border: "rgba(37,99,235,0.25)",
-                },
-              ].map(({ icon: Icon, label, value, href, color, bg, border }) => (
+                { label: "WhatsApp Chat", value: "+91 9162248786", icon: MessageCircle, color: "#22c55e", href: WA_BASE },
+                { label: "Direct Support", value: "mitraai0001@gmail.com", icon: Mail, color: "#3b82f6", href: "mailto:mitraai0001@gmail.com" },
+                { label: "Phone Line", value: "+91 9162248786", icon: Phone, color: "#7c3aed", href: "tel:+919162248786" }
+              ].map((item, i) => (
                 <motion.a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("http") ? "_blank" : undefined}
-                  rel="noopener noreferrer"
+                  key={i}
+                  href={item.href}
+                  target="_blank"
+                  className="group"
+                  data-theme="light"
                   style={{
+                    padding: "1.5rem",
+                    background: "var(--bg-card)",
+                    borderRadius: "20px",
+                    border: "1px solid var(--border-subtle)",
                     display: "flex",
                     alignItems: "center",
-                    gap: "1rem",
-                    padding: "1.1rem 1.25rem",
-                    borderRadius: "16px",
-                    background: "var(--bg-card)",
-                    border: "1px solid var(--border-subtle)",
+                    gap: "1.25rem",
                     textDecoration: "none",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.03)",
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                   }}
-                  whileHover={{ scale: 1.02, borderColor: border }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.18 }}
+                  whileHover={{ y: -4, boxShadow: "0 12px 32px rgba(0,0,0,0.08)" }}
                 >
-                  <div
-                    style={{
-                      width: "44px", height: "44px", borderRadius: "12px", flexShrink: 0,
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      background: bg, border: `1px solid ${border}`, color,
-                    }}
-                  >
-                    <Icon size={19} />
+                  <div style={{ 
+                    width: "52px", height: "52px", borderRadius: "14px", background: `${item.color}15`, 
+                    display: "flex", alignItems: "center", justifyContent: "center", color: item.color 
+                  }}>
+                    <item.icon size={24} />
                   </div>
                   <div>
-                    <div style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.2rem" }}>
-                      {label}
-                    </div>
-                    <div style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--text-primary)" }}>
-                      {value}
-                    </div>
+                    <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{item.label}</div>
+                    <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text-primary)" }}>{item.value}</div>
                   </div>
                 </motion.a>
               ))}
 
-              {/* Quick WhatsApp CTA */}
-              <motion.a
-                href={`${WA_BASE}?text=${quickWAMessage}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  gap: "0.75rem", padding: "1rem 1.5rem", borderRadius: "16px",
-                  fontSize: "0.95rem", fontWeight: 700, color: "white",
-                  background: "linear-gradient(135deg, #25D366, #128C7E)",
-                  boxShadow: "0 4px 20px rgba(37,211,102,0.3)",
-                  textDecoration: "none", marginTop: "0.25rem",
-                }}
-                whileHover={{ scale: 1.02, boxShadow: "0 8px 32px rgba(37,211,102,0.45)" }}
-                whileTap={{ scale: 0.97 }}
-              >
-                <MessageCircle size={20} />
-                Chat on WhatsApp Now
-              </motion.a>
+              <div className="luminous-border" style={{ borderRadius: "24px", marginTop: "1rem" }}>
+                <motion.div 
+                  whileHover={{ scale: 1.02 }}
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+                  }}
+                  style={{ 
+                    padding: "2rem", 
+                    background: "var(--bg-card)", 
+                    borderRadius: "24px",
+                    position: "relative", 
+                    overflow: "hidden",
+                    border: "1px solid var(--border-subtle)",
+                    transition: "transform 0.1s ease-out",
+                  } as any}
+                  className="group relative"
+                >
+                  {/* Spotlight Effect */}
+                  <div 
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "radial-gradient(400px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(124, 58, 237, 0.08), transparent 80%)",
+                      pointerEvents: "none",
+                      zIndex: 1
+                    }}
+                  />
+                  
+                  <div style={{ position: "absolute", top: -20, right: -20, opacity: 0.05, zIndex: 0 }}>
+                     <CheckCircle size={140} />
+                  </div>
 
-              <p style={{ fontSize: "0.75rem", textAlign: "center", color: "var(--text-muted)" }}>
-                ⚡ We respond within 2 hours on WhatsApp
-              </p>
+                  <div style={{ position: "relative", zIndex: 2 }}>
+                    <h4 style={{ fontSize: "1.25rem", fontWeight: 900, marginBottom: "1rem", color: "var(--text-primary)", letterSpacing: "-0.02em" }}>
+                      Why Choose Webis?
+                    </h4>
+                    <ul style={{ display: "flex", flexDirection: "column", gap: "1rem", padding: 0, listStyle: "none" }}>
+                      {[
+                        { text: "Fast 2-Hour Response", color: "#22c55e" },
+                        { text: "Conversion Focused Design", color: "#3b82f6" },
+                        { text: "Transparent Pricing", color: "#f59e0b" }
+                      ].map((item, i) => (
+                        <motion.li 
+                          key={i}
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.1 }}
+                          style={{ fontSize: "0.95rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.75rem", color: "var(--text-secondary)" }}
+                        >
+                          <div style={{ padding: "4px", borderRadius: "6px", background: `${item.color}15` }}>
+                            <CheckCircle size={16} color={item.color} /> 
+                          </div>
+                          {item.text}
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Glass Reflection */}
+                  <div style={{ 
+                    position: "absolute", inset: 0, 
+                    background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%)",
+                    pointerEvents: "none"
+                  }} />
+                </motion.div>
+              </div>
             </div>
           </ScrollReveal>
 
-          {/* ── Right: form ── */}
+          {/* Right Side: Modern Form */}
           <ScrollReveal direction="right">
-            <div
-              className="card"
-              style={{ padding: "clamp(1.25rem, 4vw, 2rem)", background: "var(--bg-card)" }}
+            <div 
+              data-theme="light"
+              className="contact-card"
+              style={{
+                background: "var(--bg-card)",
+                borderRadius: "24px",
+                border: "1px solid var(--border-subtle)",
+                padding: "clamp(1.25rem, 5vw, 2.5rem)",
+                boxShadow: "0 20px 50px rgba(0,0,0,0.08)",
+                width: "100%",
+                maxWidth: "100%",
+                overflow: "hidden"
+              }}
             >
               {submitted ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "3rem 1rem", textAlign: "center", gap: "1rem" }}
+                  style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 0", textAlign: "center", gap: "1rem" }}
                 >
-                  <div style={{ width: "64px", height: "64px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(37,211,102,0.12)", border: "1px solid rgba(37,211,102,0.3)" }}>
-                    <CheckCircle size={28} color="#25D366" />
+                  <div style={{ width: "64px", height: "64px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)" }}>
+                    <CheckCircle size={28} color="#22c55e" />
                   </div>
-                  <h3 style={{ fontWeight: 800, fontSize: "1.3rem", color: "var(--text-primary)", margin: 0 }}>
+                  <h3 style={{ fontWeight: 800, fontSize: "1.4rem", color: "var(--text-primary)", margin: 0 }}>
                     Opening WhatsApp…
                   </h3>
-                  <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", margin: 0 }}>
-                    WhatsApp has been opened with your details pre-filled.
-                    <br />Thanks {form.name}! We&apos;ll reply within 2 hours. 🚀
+                  <p style={{ color: "var(--text-secondary)", maxWidth: "340px" }}>
+                    Thanks {form.name.split(' ')[0]}! Your message has been prepared. If WhatsApp didn&apos;t open automatically, click below.
                   </p>
-                  <motion.a
+                  <a
                     href={`${WA_BASE}?text=${buildWAMessage(form)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-primary"
-                    style={{ marginTop: "0.5rem" }}
-                    whileHover={{ scale: 1.03 }}
+                    style={{ marginTop: "1rem", padding: "1rem 2rem" }}
                   >
-                    <MessageCircle size={16} /> Open WhatsApp Again
-                  </motion.a>
+                    Launch WhatsApp Again
+                  </a>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }} noValidate>
-
-                  {/* Row: Name + Email */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }} className="grid-cols-1 sm:grid-cols-2">
-                    {/* Name */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                      <label style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-muted)" }}>
-                        Your Name *
-                      </label>
-                      <div style={{ position: "relative" }}>
-                        <User size={15} style={{ position: "absolute", left: "0.875rem", top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)", pointerEvents: "none" }} />
-                        <input
-                          name="name" type="text" value={form.name} onChange={handleChange}
-                          placeholder="Aarav Mehta"
-                          style={errors.name ? inputError : inputBase}
-                        />
-                      </div>
-                      {errors.name && <p style={{ fontSize: "0.75rem", color: "#f87171", margin: 0 }}>{errors.name}</p>}
+                <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem" }} className="grid-cols-1 sm:grid-cols-2">
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                      <label style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--text-primary)" }}>Full Name</label>
+                      <input
+                        name="name" value={form.name} onChange={handleChange}
+                        placeholder="e.g. Ahsan Khan"
+                        style={errors.name ? inputError : { ...inputBase, background: "#f8f9fa" }}
+                      />
                     </div>
-
-                    {/* Email */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                      <label style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-muted)" }}>
-                        Email *
-                      </label>
-                      <div style={{ position: "relative" }}>
-                        <Mail size={15} style={{ position: "absolute", left: "0.875rem", top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)", pointerEvents: "none" }} />
-                        <input
-                          name="email" type="email" value={form.email} onChange={handleChange}
-                          placeholder="aarav@company.com"
-                          style={errors.email ? inputError : inputBase}
-                        />
-                      </div>
-                      {errors.email && <p style={{ fontSize: "0.75rem", color: "#f87171", margin: 0 }}>{errors.email}</p>}
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                      <label style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--text-primary)" }}>Email Address</label>
+                      <input
+                        name="email" value={form.email} onChange={handleChange}
+                        placeholder="hello@company.com"
+                        style={errors.email ? inputError : { ...inputBase, background: "#f8f9fa" }}
+                      />
                     </div>
                   </div>
 
-                  {/* Row: Phone + Service */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }} className="grid-cols-1 sm:grid-cols-2">
-                    {/* Phone */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                      <label style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-muted)" }}>
-                        WhatsApp / Phone *
-                      </label>
-                      <div style={{ position: "relative" }}>
-                        <Phone size={15} style={{ position: "absolute", left: "0.875rem", top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)", pointerEvents: "none" }} />
-                        <input
-                          name="phone" type="tel" value={form.phone} onChange={handleChange}
-                          placeholder="+91 98765 43210"
-                          style={errors.phone ? inputError : inputBase}
-                        />
-                      </div>
-                      {errors.phone && <p style={{ fontSize: "0.75rem", color: "#f87171", margin: 0 }}>{errors.phone}</p>}
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem" }} className="grid-cols-1 sm:grid-cols-2">
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                      <label style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--text-primary)" }}>Phone / WhatsApp</label>
+                      <input
+                        name="phone" value={form.phone} onChange={handleChange}
+                        placeholder="+91"
+                        style={errors.phone ? inputError : { ...inputBase, background: "#f8f9fa" }}
+                      />
                     </div>
-
-                    {/* Service */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                      <label style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-muted)" }}>
-                        Service Needed *
-                      </label>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                      <label style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--text-primary)" }}>Service Interest</label>
                       <div style={{ position: "relative" }}>
-                        <ChevronDown size={15} style={{ position: "absolute", right: "0.875rem", top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)", pointerEvents: "none" }} />
                         <select
                           name="service" value={form.service} onChange={handleChange}
-                          style={{ ...(errors.service ? inputError : inputBase), paddingLeft: "1rem", paddingRight: "2.5rem", appearance: "none" }}
+                          style={{ ...(errors.service ? inputError : inputBase), paddingRight: "2.5rem", background: "#f8f9fa", appearance: "none" }}
                         >
-                          <option value="" disabled>Select a service…</option>
-                          {serviceOptions.map((s) => (
-                            <option key={s} value={s} style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>{s}</option>
-                          ))}
+                          <option value="" disabled>Select project type…</option>
+                          {serviceOptions.map(s => <option key={s} value={s}>{s}</option>)}
                         </select>
+                        <ChevronDown size={16} style={{ position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", opacity: 0.5 }} />
                       </div>
-                      {errors.service && <p style={{ fontSize: "0.75rem", color: "#f87171", margin: 0 }}>{errors.service}</p>}
                     </div>
                   </div>
 
-                  {/* Message */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                    <label style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-muted)" }}>
-                      Tell Us About Your Project *
-                    </label>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                    <label style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--text-primary)" }}>Project Details</label>
                     <textarea
-                      name="message" value={form.message} onChange={handleChange} rows={5}
-                      placeholder="Describe your vision, goals, timeline, and budget…"
-                      style={{ ...( errors.message ? inputError : inputBase), paddingLeft: "1rem", resize: "vertical", minHeight: "120px" }}
+                      name="message" value={form.message} onChange={handleChange} rows={4}
+                      placeholder="Briefly describe your goals..."
+                      style={{ ...(errors.message ? inputError : inputBase), background: "#f8f9fa", resize: "none" }}
                     />
-                    {errors.message && <p style={{ fontSize: "0.75rem", color: "#f87171", margin: 0 }}>{errors.message}</p>}
                   </div>
 
-                  {/* Note */}
-                  <p style={{ fontSize: "0.78rem", color: "var(--text-muted)", margin: 0 }}>
-                    📲 Submitting this form will open WhatsApp with your details pre-filled for a faster response.
-                  </p>
-
-                  {/* Submit button */}
                   <motion.button
                     type="submit"
                     disabled={loading}
-                    style={{
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      gap: "0.5rem", padding: "1rem 1.5rem",
-                      fontSize: "1rem", fontWeight: 700, borderRadius: "12px",
-                      border: "none", cursor: loading ? "not-allowed" : "pointer",
-                      background: "linear-gradient(135deg, #7c3aed, #2563eb 60%, #f97316)",
-                      backgroundSize: "200% 200%",
-                      color: "white", width: "100%",
-                      boxShadow: "0 4px 24px rgba(124,58,237,0.4)",
-                      opacity: loading ? 0.75 : 1,
-                    }}
-                    whileHover={{ scale: loading ? 1 : 1.02 }}
-                    whileTap={{ scale: loading ? 1 : 0.97 }}
+                    className="btn btn-primary"
+                    style={{ 
+                      position: "relative",
+                      width: "100%",
+                      overflow: "hidden",
+                      cursor: loading ? "not-allowed" : "pointer",
+                      opacity: loading ? 0.7 : 1,
+                    } as any}
+                    whileHover={{ scale: 1.02, y: -2, boxShadow: "0 15px 40px var(--glow-primary)" }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    {loading ? (
-                      <>
-                        <motion.span
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 0.8, repeat: Infinity, ease: "linear" as const }}
-                          style={{ display: "inline-block", width: "18px", height: "18px", border: "2px solid rgba(255,255,255,0.3)", borderTop: "2px solid white", borderRadius: "50%" }}
-                        />
-                        Sending…
-                      </>
-                    ) : (
-                      <>
-                        <MessageCircle size={18} />
-                        Send via WhatsApp
-                      </>
-                    )}
+                    {/* Liquid Wave Effect */}
+                    <motion.div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "radial-gradient(circle at 50% 120%, rgba(255,255,255,0.2) 0%, transparent 60%)",
+                      }}
+                      animate={{
+                        y: [0, -8, 0],
+                        scale: [1, 1.1, 1],
+                      }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                    
+                    <span style={{ position: "relative", zIndex: 2, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem" }}>
+                      {loading ? (
+                         <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                            <motion.span 
+                              animate={{ rotate: 360 }} 
+                              transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                              style={{ display: "inline-block", width: "16px", height: "16px", border: "2px solid rgba(255,255,255,0.3)", borderTop: "2px solid white", borderRadius: "50%" }}
+                            />
+                            Preparing WhatsApp...
+                         </span>
+                      ) : (
+                        <>
+                          Start Discussion on WhatsApp <Send size={18} />
+                        </>
+                      )}
+                    </span>
                   </motion.button>
+
+                  <p style={{ textAlign: "center", fontSize: "0.8rem", color: "var(--text-secondary)", fontWeight: 600, marginTop: "0.75rem" }}>
+                    ⚡ One-click WhatsApp connect. No spam. Only results.
+                  </p>
                 </form>
               )}
             </div>

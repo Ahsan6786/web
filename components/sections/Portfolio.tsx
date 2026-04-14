@@ -22,8 +22,9 @@ export default function Portfolio() {
       id="portfolio"
       className="section"
       style={{
-        background: "var(--bg-surface)", // DARK BG
+        background: "var(--bg-surface)",
         position: "relative",
+        contain: "paint",
       }}
     >
       {/* Glow */}
@@ -72,64 +73,82 @@ export default function Portfolio() {
                   style={{ display: "block", height: "100%" }}
                 >
                   <motion.div
+                    className="stable-gpu-surface"
                     style={{
                       height: "100%",
                       display: "flex",
                       flexDirection: "column",
                       borderRadius: "20px",
                       overflow: "hidden",
-
-                      // ✅ LIGHT CARD
-                      background: "#ffffff",
-                      border: "1px solid rgba(0,0,0,0.06)",
-
-                      // premium shadow
-                      boxShadow: "0 8px 28px rgba(0,0,0,0.06)",
-
-                      willChange: "transform, box-shadow",
+                      background: "var(--bg-card)",
+                      border: "1px solid var(--border-subtle)",
+                      boxShadow: "var(--shadow-card)",
+                      position: "relative",
+                    } as any}
+                    onMouseMove={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      const x = e.clientX - rect.left;
+                      const y = e.clientY - rect.top;
+                      e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                      e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
                     }}
                     whileHover={{
-                      y: -6,
-                      boxShadow: "0 16px 48px rgba(0,0,0,0.12)",
+                      y: -10,
+                      boxShadow: "0 22px 60px rgba(0,0,0,0.18)",
                     }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
-                    {/* TOP GRADIENT */}
-                    <div
+                    {/* Spotlight */}
+                    <div 
                       style={{
-                        height: "190px",
-                        background: gradient,
-                        position: "relative",
-                        overflow: "hidden",
+                        position: "absolute",
+                        inset: 0,
+                        background: "radial-gradient(350px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(124, 58, 237, 0.05), transparent 80%)",
+                        pointerEvents: "none",
+                        zIndex: 1
                       }}
-                    >
-                      {/* Background Art */}
+                    />
+                    {/* TOP HERO */}
+                    {project.image ? (
                       <div
                         style={{
-                          position: "absolute",
-                          inset: 0,
-                          backgroundImage:
-                            "radial-gradient(circle at 25% 55%, rgba(255,255,255,0.25) 0%, transparent 55%), radial-gradient(circle at 75% 25%, rgba(255,255,255,0.15) 0%, transparent 45%)",
-                          zIndex: 1,
+                          height: "190px",
+                          position: "relative",
+                          overflow: "hidden",
                         }}
-                      />
-
-                      {/* Explicit Custom Thumbnail Cover Support */}
-                      {project.image ? (
-                        /* eslint-disable-next-line @next/next/no-img-element */
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img 
                           src={project.image} 
                           alt={project.title} 
                           style={{
-                            position: "absolute",
-                            inset: 0,
+                            display: "block",
                             width: "100%",
                             height: "100%",
                             objectFit: "cover",
-                            opacity: 0.95,
                           }}
                         />
-                      ) : (
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          height: "190px",
+                          background: gradient,
+                          position: "relative",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {/* Background Art fallback */}
+                        <div
+                          style={{
+                            position: "absolute",
+                            inset: 0,
+                            backgroundImage:
+                              "radial-gradient(circle at 25% 55%, rgba(255,255,255,0.25) 0%, transparent 55%), radial-gradient(circle at 75% 25%, rgba(255,255,255,0.15) 0%, transparent 45%)",
+                            zIndex: 1,
+                          }}
+                        />
+
                         <div
                           style={{
                             position: "absolute",
@@ -142,42 +161,42 @@ export default function Portfolio() {
                         >
                           {project.title[0]}
                         </div>
-                      )}
 
-                      <div style={{ position: "absolute", top: 14, left: 14 }}>
-                        <span
-                          style={{
-                            padding: "0.3rem 0.75rem",
-                            borderRadius: "100px",
-                            fontSize: "0.7rem",
-                            fontWeight: 600,
-                            color: "white",
-                            background: "rgba(0,0,0,0.35)",
-                          }}
-                        >
-                          {project.category}
-                        </span>
-                      </div>
+                        <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2 }}>
+                          <span
+                            style={{
+                              padding: "0.3rem 0.75rem",
+                              borderRadius: "100px",
+                              fontSize: "0.7rem",
+                              fontWeight: 600,
+                              color: "white",
+                              background: "rgba(0,0,0,0.35)",
+                            }}
+                          >
+                            {project.category}
+                          </span>
+                        </div>
 
-                      <div style={{ position: "absolute", bottom: 14, left: 14 }}>
-                        <span
-                          style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: "0.35rem",
-                            padding: "0.3rem 0.75rem",
-                            borderRadius: "100px",
-                            fontSize: "0.7rem",
-                            fontWeight: 700,
-                            color: "white",
-                            background: "rgba(0,0,0,0.4)",
-                          }}
-                        >
-                          <TrendingUp size={10} /> ↑{project.stats.increase}{" "}
-                          {project.stats.metric}
-                        </span>
+                        <div style={{ position: "absolute", bottom: 14, left: 14, zIndex: 2 }}>
+                          <span
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "0.35rem",
+                              padding: "0.3rem 0.75rem",
+                              borderRadius: "100px",
+                              fontSize: "0.7rem",
+                              fontWeight: 700,
+                              color: "white",
+                              background: "rgba(0,0,0,0.4)",
+                            }}
+                          >
+                            <TrendingUp size={10} /> ↑{project.stats.increase}{" "}
+                            {project.stats.metric}
+                          </span>
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* BODY */}
                     <div
@@ -192,7 +211,7 @@ export default function Portfolio() {
                         style={{
                           fontWeight: 700,
                           fontSize: "1.05rem",
-                          color: "#111", // dark text
+                          color: "var(--text-primary)", 
                           marginBottom: "0.5rem",
                         }}
                       >
@@ -202,7 +221,7 @@ export default function Portfolio() {
                       <p
                         style={{
                           fontSize: "0.83rem",
-                          color: "#555", // readable gray
+                          color: "var(--text-secondary)", 
                           flex: 1,
                           marginBottom: "1rem",
                         }}
@@ -234,9 +253,15 @@ export default function Portfolio() {
 
         <ScrollReveal delay={0.35}>
           <div style={{ textAlign: "center", marginTop: "3.5rem" }}>
-            <a href="/#contact" className="btn btn-primary">
+            <motion.a 
+              href="/#contact" 
+              className="btn btn-primary"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              style={{ color: "var(--brand-primary)", fontWeight: 800 }}
+            >
               Start Your Project <ArrowRight size={16} />
-            </a>
+            </motion.a>
           </div>
         </ScrollReveal>
       </div>

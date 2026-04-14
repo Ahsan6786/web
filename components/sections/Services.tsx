@@ -8,10 +8,10 @@ import SectionHeading from "@/components/ui/SectionHeading";
 const iconMap: Record<string, React.ElementType> = { Building2, Layers, UtensilsCrossed, Code2 };
 
 const cardAccents: Record<string, { from: string; to: string; hoverGlow: string }> = {
-  business:   { from: "#e879f9", to: "#a78bfa", hoverGlow: "rgba(232, 121, 249, 0.15)" },
-  portfolio:  { from: "#f472b6", to: "#e879f9", hoverGlow: "rgba(244, 114, 182, 0.15)" },
-  restaurant: { from: "#c084fc", to: "#f472b6", hoverGlow: "rgba(192, 132, 252, 0.15)" },
-  webapp:     { from: "#d946ef", to: "#a855f7", hoverGlow: "rgba(217, 70, 239, 0.15)" },
+  business: { from: "#2563eb", to: "#4338ca", hoverGlow: "rgba(37, 99, 235, 0.15)" },
+  portfolio: { from: "#0ea5e9", to: "#2563eb", hoverGlow: "rgba(14, 165, 233, 0.15)" },
+  restaurant: { from: "#38bdf8", to: "#0ea5e9", hoverGlow: "rgba(56, 189, 248, 0.15)" },
+  webapp: { from: "#6366f1", to: "#2563eb", hoverGlow: "rgba(99, 102, 241, 0.15)" },
 };
 
 function TimelineCard({ service, i }: { service: typeof services[0]; i: number }) {
@@ -21,13 +21,10 @@ function TimelineCard({ service, i }: { service: typeof services[0]; i: number }
 
   return (
     <div className="relative flex items-center w-full mb-12 sm:mb-20 last:mb-0 justify-end">
-      {/* Inner row — mobile: left-aligned, desktop: alternating */}
       <div
         className={[
           "w-full flex items-center",
-          // mobile: always push card to the right of the left-rail node
           "justify-end",
-          // desktop: alternate row direction
           isLeftOnDesktop
             ? "md:flex-row md:justify-between"
             : "md:flex-row-reverse md:justify-between",
@@ -35,54 +32,70 @@ function TimelineCard({ service, i }: { service: typeof services[0]; i: number }
       >
         {/* Timeline node */}
         <div
-          className="absolute left-[1.5rem] md:left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-full z-10 flex-shrink-0"
+          className="absolute left-[1.5rem] md:left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-full z-10"
           style={{
             background: `linear-gradient(135deg, ${acc.from}, ${acc.to})`,
-            boxShadow: `0 0 20px ${acc.hoverGlow}, inset 0 2px 4px rgba(255,255,255,0.4)`,
+            boxShadow: `0 0 20px ${acc.hoverGlow}`,
             border: "4px solid var(--bg-primary)",
           }}
         >
-          <Icon size={20} color="white" style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.2))" }} />
+          <Icon size={20} color="white" />
         </div>
 
-        {/* Card */}
+        {/* ✅ PREMIUM CARD */}
         <motion.div
           initial={{ opacity: 0, x: isLeftOnDesktop ? -30 : 30, y: 15 }}
           whileInView={{ opacity: 1, x: 0, y: 0 }}
-          whileHover={{ y: -6, boxShadow: "0 8px 32px rgba(0,0,0,0.08)" }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="w-[calc(100%-4.5rem)] md:w-[calc(50%-3.5rem)] p-8 sm:p-10 rounded-[32px] overflow-hidden"
-          data-theme="light"
-          style={{
-            background: "var(--bg-card)",
-            border: "1px solid var(--border-subtle)",
-            boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
-            position: "relative",
-            transition: "box-shadow 0.3s ease, transform 0.3s ease",
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+            e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
           }}
+          whileHover={{ y: -6, boxShadow: "0 22px 60px rgba(0,0,0,0.18)" }}
+          transition={{ duration: 0.5 }}
+          className="w-[calc(100%-4.5rem)] md:w-[calc(50%-3.5rem)] p-8 sm:p-10 rounded-[28px] relative overflow-hidden"
+          style={{
+            background: "var(--bg-card)", 
+            border: "1px solid var(--border-subtle)",
+            boxShadow: "var(--shadow-card)",
+            willChange: "transform, box-shadow",
+            transform: "translateZ(0)",
+          } as any}
         >
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--border-accent)] to-transparent pointer-events-none opacity-20" />
+          {/* Spotlight Effect */}
+          <div 
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "radial-gradient(400px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(37, 99, 235, 0.05), transparent 80%)",
+              pointerEvents: "none",
+              zIndex: 1
+            }}
+          />
 
-          <span style={{ fontSize: "0.8rem", fontWeight: 800, color: "var(--text-muted)", letterSpacing: "0.08em" }}>
-            PHASE 0{i + 1}
-          </span>
-          <h3 style={{ fontWeight: 700, fontSize: "1.45rem", color: "var(--text-primary)", marginTop: "0.5rem", marginBottom: "1rem", lineHeight: 1.3 }}>
-            {service.title}
-          </h3>
-          <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "2rem" }}>
-            {service.description}
-          </p>
+          <div style={{ position: "relative", zIndex: 2 }}>
+            <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase" }}>
+              PHASE 0{i + 1}
+            </span>
 
-          <motion.a
-            href="/#contact"
-            className="inline-flex items-center gap-2 text-[0.9rem] font-semibold tracking-wide w-fit border border-transparent pb-1"
-            style={{ color: acc.from }}
-            whileHover={{ x: 5 }}
-            transition={{ duration: 0.2 }}
-          >
-            Start this phase <ArrowRight size={15} />
-          </motion.a>
+            <h3 style={{ fontWeight: 800, fontSize: "1.4rem", color: "var(--text-primary)", marginTop: "0.5rem", letterSpacing: "-0.02em" }}>
+              {service.title}
+            </h3>
+
+            <p style={{ fontSize: "1rem", color: "var(--text-secondary)", marginTop: "0.75rem", marginBottom: "1.75rem", lineHeight: 1.6 }}>
+              {service.description}
+            </p>
+
+            <motion.a
+              href="/#contact"
+              style={{ color: acc.from, fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.95rem" }}
+              whileHover={{ x: 5 }}
+            >
+              Consult on Phase <ArrowRight size={16} />
+            </motion.a>
+          </div>
         </motion.div>
       </div>
     </div>
@@ -91,66 +104,63 @@ function TimelineCard({ service, i }: { service: typeof services[0]; i: number }
 
 export default function Services() {
   return (
-    <section id="services" style={{ background: "var(--bg-primary)", position: "relative", padding: "7rem 0 4rem", overflow: "hidden" }}>
-      <div style={{ maxWidth: "1320px", margin: "0 auto", padding: "0 1.5rem", position: "relative", zIndex: 1 }}>
-        <div style={{ textAlign: "center", marginBottom: "5rem" }}>
-          <SectionHeading
-            label="Roadmap"
-            title="Services Designed to"
-            titleHighlight="Convert"
-            subtitle="Follow our proven roadmap from business branding to full-scale web applications."
-            align="center"
+    <section
+      id="services"
+      style={{
+        background: "var(--bg-primary)",
+        padding: "7rem 0 4rem",
+        position: "relative",
+        contain: "paint",
+      }}
+    >
+      <div style={{ maxWidth: "1320px", margin: "0 auto", padding: "0 1.5rem" }}>
+        <SectionHeading
+          label="Roadmap"
+          title="Services Designed to"
+          titleHighlight="Convert"
+          subtitle="Follow our proven roadmap from business branding to full-scale web applications."
+          align="center"
+        />
+
+        <div className="relative max-w-5xl mx-auto mt-16">
+          {/* Timeline line */}
+          <div
+            className="absolute left-[1.5rem] md:left-1/2 top-0 bottom-0 w-[2px]"
+            style={{ background: "rgba(255,255,255,0.1)" }}
           />
+
+          {services.map((svc, i) => (
+            <TimelineCard key={svc.id} service={svc} i={i} />
+          ))}
         </div>
 
-        {/* Roadmap Timeline Container */}
-        <div className="relative max-w-5xl mx-auto">
-          {/* Vertical line */}
-          <motion.div
-            className="absolute left-[1.5rem] md:left-1/2 top-4 bottom-0 w-[2px] -translate-x-1/2 rounded-full overflow-hidden"
-            style={{ background: "var(--border-subtle)" }}
-          >
-            <motion.div
-              className="w-full absolute top-0 left-0"
-              style={{
-                height: "250px",
-                background: "linear-gradient(to bottom, transparent, var(--brand-purple), var(--brand-blue), transparent)",
-                opacity: 0.8,
-              }}
-              animate={{ y: ["-100%", "800%"] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-            />
-          </motion.div>
-
-          <div className="relative z-10 flex flex-col">
-            {services.map((svc, i) => (
-              <TimelineCard key={svc.id} service={svc} i={i} />
-            ))}
-          </div>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          style={{ textAlign: "center", marginTop: "5rem" }}
-        >
-          <motion.a
-            href="/#contact"
-            style={{
-              display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "0.9rem 2.25rem",
-              borderRadius: "100px", fontSize: "0.95rem", fontWeight: 600, gap: "0.5rem",
-              background: "var(--bg-card)", color: "var(--text-primary)",
-              border: "1px solid var(--border-accent)", textDecoration: "none",
-              boxShadow: "var(--shadow-btn)",
+        <div style={{ textAlign: "center", marginTop: "4rem" }}>
+          <a 
+            href="/#contact" 
+            className="btn btn-primary"
+            style={{ 
+              position: "relative",
+              overflow: "hidden",
             }}
-            whileHover={{ scale: 1.03, y: -2 }}
-            whileTap={{ scale: 0.97 }}
           >
-            Ready to start your journey? Let&apos;s talk <ArrowRight size={17} />
-          </motion.a>
-        </motion.div>
+            {/* Liquid Wave Effect */}
+            <motion.div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "radial-gradient(circle at 50% 120%, rgba(255,255,255,0.2) 0%, transparent 60%)",
+              }}
+              animate={{
+                y: [0, -8, 0],
+                scale: [1, 1.1, 1],
+              }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <span style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "0.5rem", color: "var(--brand-primary)", fontWeight: 800 }}>
+              Let’s talk <ArrowRight size={18} />
+            </span>
+          </a>
+        </div>
       </div>
     </section>
   );

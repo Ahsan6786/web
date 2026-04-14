@@ -42,10 +42,13 @@ function CountUp({ target, suffix = "", duration = 1800 }: { target: number; suf
         fontWeight: 900,
         fontSize: "clamp(2rem, 5vw, 2.8rem)",
         lineHeight: 1,
-        background: "linear-gradient(135deg, #7c3aed, #2563eb)",
+        fontVariantNumeric: "tabular-nums",
+        backgroundImage: "var(--gradient-text)",
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
         backgroundClip: "text",
+        display: "inline-block",
+        minWidth: "1ch"
       }}
     >
       {count}{suffix}
@@ -56,11 +59,24 @@ function CountUp({ target, suffix = "", duration = 1800 }: { target: number; suf
 export default function Stats() {
   const chartsRef = useRef(null);
   const chartsInView = useInView(chartsRef, { once: true, margin: "-80px" });
+  const [jitter, setJitter] = useState(0);
+
+  // Live Heartbeat Effect: Simulates real-time data flow
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setJitter(prev => (prev + 1) % 100);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   // Common Premium Options
   const premiumOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 1000,
+      easing: "easeOutQuart" as const,
+    },
     plugins: {
       legend: { display: false },
       tooltip: {
@@ -76,24 +92,24 @@ export default function Stats() {
     },
     scales: {
       x: { display: false, grid: { display: false } },
-      y: { display: false, grid: { display: false }, beginAtZero: true },
+      y: { display: false, grid: { display: false }, beginAtZero: false },
     },
     interaction: { mode: "index" as const, intersect: false },
   };
 
-  // 1. Line: Growth
+  // 1. Line: Growth (Add subtle jitter to the last few points)
   const lineData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [{
       label: "Client Inflow",
-      data: [2, 4, 5, 7, 8, 10, 13, 16, 20, 28, 38, 50],
-      borderColor: "#7c3aed",
-      backgroundColor: "rgba(124,58,237,0.1)",
+      data: [2, 4, 5, 7, 8, 10, 13, 16, 20, 28 + (jitter % 2), 38 - (jitter % 3), 50 + (jitter % 5)],
+      borderColor: "#f97316",
+      backgroundColor: "rgba(249, 115, 22, 0.1)",
       tension: 0.5,
       fill: true,
       pointRadius: 0,
       pointHoverRadius: 5,
-      borderWidth: 2,
+      borderWidth: 3,
     }],
   };
 
@@ -102,9 +118,9 @@ export default function Stats() {
     labels: ["Q1", "Q2", "Q3", "Q4"],
     datasets: [{
       label: "Value Generated (M)",
-      data: [1.2, 2.4, 4.1, 7.5],
-      backgroundColor: "#2563eb",
-      borderRadius: 4,
+      data: [1.2, 2.4, 4.1, 7.5 + (jitter % 0.4)],
+      backgroundColor: "#a855f7",
+      borderRadius: 6,
       borderSkipped: false,
     }]
   };
@@ -113,8 +129,8 @@ export default function Stats() {
   const donutData = {
     labels: ["Highly Satisfied", "Satisfied", "Neutral"],
     datasets: [{
-      data: [85, 13, 2],
-      backgroundColor: ["#7c3aed", "#38bdf8", "#e2e8f0"],
+      data: [85 + (jitter % 2), 13 - (jitter % 1), 2],
+      backgroundColor: ["#f97316", "#a855f7", "#fbbf24"],
       borderWidth: 0,
       hoverOffset: 6,
     }],
@@ -125,9 +141,9 @@ export default function Stats() {
     labels: ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00"],
     datasets: [{
       label: "Global Latency (ms)",
-      data: [42, 45, 38, 52, 48, 41],
-      borderColor: "#10b981",
-      backgroundColor: "rgba(16, 185, 129, 0.1)",
+      data: [42 + (jitter % 4), 45 - (jitter % 3), 38 + (jitter % 5), 52 - (jitter % 2), 48 + (jitter % 4), 41],
+      borderColor: "#fbbf24",
+      backgroundColor: "rgba(251, 191, 36, 0.1)",
       tension: 0.4,
       fill: true,
       pointRadius: 0,
@@ -141,9 +157,9 @@ export default function Stats() {
     labels: ["E-commerce", "SaaS", "Portfolios", "Corporate"],
     datasets: [{
       label: "Deployments",
-      data: [24, 18, 35, 12],
-      backgroundColor: ["#f472b6", "#a78bfa", "#38bdf8", "#fbbf24"],
-      borderRadius: 4,
+      data: [24, 18 + (jitter % 2), 35 - (jitter % 3), 12],
+      backgroundColor: ["#f97316", "#a855f7", "#fbbf24", "#f472b6"],
+      borderRadius: 6,
     }]
   };
   
@@ -153,7 +169,7 @@ export default function Stats() {
   };
 
   return (
-    <section id="stats" className="section" style={{ background: "var(--bg-primary)", position: "relative", padding: "5rem 0" }}>
+    <section id="stats" className="section" style={{ background: "var(--bg-primary)", position: "relative", padding: "5rem 0", contain: "paint" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 1.5rem" }}>
         
         {/* Main Dashboard Grid */}
@@ -182,7 +198,9 @@ export default function Stats() {
                 }}
               >
                 <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)", fontWeight: 600 }}>{stat.label}</div>
-                <CountUp target={stat.value} suffix={stat.suffix} />
+                <div style={{ fontVariantNumeric: "tabular-nums", minHeight: "2.4rem", display: "flex", alignItems: "center" }}>
+                   <CountUp target={stat.value} suffix={stat.suffix} />
+                </div>
                 <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.25rem" }}>{stat.description}</div>
               </motion.div>
             ))}
@@ -198,7 +216,7 @@ export default function Stats() {
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
                 <h3 style={{ fontSize: "0.9rem", fontWeight: 700, color: "var(--text-primary)", margin: 0 }}>Active Growth Trajectory</h3>
-                <span style={{ fontSize: "0.7rem", padding: "0.25rem 0.5rem", borderRadius: "100px", background: "rgba(124,58,237,0.1)", color: "#7c3aed", fontWeight: 700 }}>+24% YOY</span>
+                <span style={{ fontSize: "0.7rem", padding: "0.25rem 0.5rem", borderRadius: "100px", background: "rgba(249, 115, 22, 0.1)", color: "#f97316", fontWeight: 700 }}>+24% YOY</span>
               </div>
               <div style={{ height: "180px", width: "100%" }}>
                 {chartsInView && <Line data={lineData} options={premiumOptions} />}
@@ -214,7 +232,7 @@ export default function Stats() {
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
                 <h3 style={{ fontSize: "0.9rem", fontWeight: 700, color: "var(--text-primary)", margin: 0 }}>Quarterly Value (M)</h3>
-                <span style={{ fontSize: "0.7rem", padding: "0.25rem 0.5rem", borderRadius: "100px", background: "rgba(37,99,235,0.1)", color: "#2563eb", fontWeight: 700 }}>Avg ROI 3.2x</span>
+                <span style={{ fontSize: "0.7rem", padding: "0.25rem 0.5rem", borderRadius: "100px", background: "rgba(168, 85, 247, 0.1)", color: "#a855f7", fontWeight: 700 }}>Avg ROI 3.2x</span>
               </div>
               <div style={{ height: "180px", width: "100%" }}>
                 {chartsInView && <Bar data={barData} options={premiumOptions} />}
@@ -249,7 +267,7 @@ export default function Stats() {
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
                 <h3 style={{ fontSize: "0.9rem", fontWeight: 700, color: "var(--text-primary)", margin: 0 }}>System Latency (ms)</h3>
-                <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 10px #10b981" }} />
+                <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#fbbf24", boxShadow: "0 0 10px #fbbf24" }} />
               </div>
               <div style={{ height: "140px", width: "100%" }}>
                 {chartsInView && <Line data={speedData} options={premiumOptions} />}
